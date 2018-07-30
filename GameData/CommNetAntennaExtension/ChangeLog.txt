@@ -1,2 +1,8 @@
 ChangeLog:
 
+Version 0.9
+	direct antennas: 5M and 500G
+	relay antennas: 25M, 7G, 25G, 500G
+	plugin for showing CombinabilityExponent in the VAB
+
+

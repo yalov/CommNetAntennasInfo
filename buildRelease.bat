@@ -27,7 +27,7 @@ set GAMEDIR=CommNetAntennaExtension
 set GAMEDATA="GameData\"
 set VERSIONFILE=%GAMEDIR%.version
 set LICENSE=%GAMEDIR%-License.txt
-rem set README=ReadMe.md
+set CHANGELOG=ChangeLog.txt
 
 set RELEASEDIR=Release
 set ZIP="c:\Program Files\7-zip\7z.exe"
@@ -39,9 +39,9 @@ copy /Y %VERSIONFILE% %GAMEDATA%\%GAMEDIR%
 
 if "%LICENSE%" NEQ "" copy /y  %LICENSE% %GAMEDATA%\%GAMEDIR%
 if "%README%" NEQ "" copy /Y %README% %GAMEDATA%\%GAMEDIR%
+if "%CHANGELOG%" NEQ "" copy /Y %CHANGELOG% %GAMEDATA%\%GAMEDIR%
 
 rem Get Version info
-echo "Trying to get version"
 
 copy %VERSIONFILE% tmp.version
 set VERSIONFILE=tmp.version
