@@ -1,7 +1,7 @@
 {
-  "NAME": "CommNetAntennaExtension",
-  "URL": "https://raw.githubusercontent.com/yalov/CommNetAntennaExtension/master/CommNetAntennaExtension.version",
-  "DOWNLOAD": "https://github.com/yalov/CommNetAntennaExtension/releases",
+  "NAME": "CommNetAntennasExtension",
+  "URL": "https://raw.githubusercontent.com/yalov/CommNetAntennasExtension/master/CommNetAntennasExtension.version",
+  "DOWNLOAD": "https://github.com/yalov/CommNetAntennasExtension/releases",
   "VERSION": {
     "MAJOR": 0,
     "MINOR": 9,

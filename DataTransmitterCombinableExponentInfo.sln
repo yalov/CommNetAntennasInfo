@@ -10,23 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		buildDeploy.bat = buildDeploy.bat
 		buildRelease.bat = buildRelease.bat
 		ChangeLog.txt = ChangeLog.txt
-		CommnetAntennaExtension.version = CommnetAntennaExtension.version
+		CommNetAntennasExtension.version = CommNetAntennasExtension.version
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localization", "{2CACE644-FDB7-4779-A7CB-EACABF02CEC0}"
 	ProjectSection(SolutionItems) = preProject
 		GameData\CommnetAntennaExtension\localization\localization.cfg = GameData\CommnetAntennaExtension\localization\localization.cfg
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Parts", "Parts", "{E2F518C7-551F-44CE-93B3-F452A89890C8}"
-	ProjectSection(SolutionItems) = preProject
-		GameData\CommnetAntennaExtension\Parts\CommAntenna\CommAntenna.cfg = GameData\CommnetAntennaExtension\Parts\CommAntenna\CommAntenna.cfg
-		GameData\CommnetAntennaExtension\Parts\CommDish1\CommDish1.cfg = GameData\CommnetAntennaExtension\Parts\CommDish1\CommDish1.cfg
-		GameData\CommnetAntennaExtension\Parts\CommDish2\CommDish2.cfg = GameData\CommnetAntennaExtension\Parts\CommDish2\CommDish2.cfg
-		GameData\CommnetAntennaExtension\Parts\CommDish3\CommDish3.cfg = GameData\CommnetAntennaExtension\Parts\CommDish3\CommDish3.cfg
-		GameData\CommnetAntennaExtension\Parts\CommDish4\CommDish4.cfg = GameData\CommnetAntennaExtension\Parts\CommDish4\CommDish4.cfg
-		GameData\CommnetAntennaExtension\Parts\CommDeployableAntenna\DeployableAntenna.cfg = GameData\CommnetAntennaExtension\Parts\CommDeployableAntenna\DeployableAntenna.cfg
 	EndProjectSection
 EndProject
 Global

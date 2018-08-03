@@ -23,13 +23,13 @@ rem    but not always
 rem LICENSE is the license file
 rem README is the readme file
 
-set GAMEDIR=CommNetAntennaExtension
+set GAMEDIR=CommNetAntennasExtension
 set GAMEDATA="GameData\"
 set VERSIONFILE=%GAMEDIR%.version
 set LICENSE=%GAMEDIR%-License.txt
 set CHANGELOG=ChangeLog.txt
 
-set RELEASEDIR=Release
+set RELEASEDIR=Releases
 set ZIP="c:\Program Files\7-zip\7z.exe"
 
 rem Copy files to GameData locations

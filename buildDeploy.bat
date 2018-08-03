@@ -3,7 +3,7 @@
 
 set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.4.5
 
-set MODNAME=CommNetAntennaExtension
+set MODNAME=CommNetAntennasExtension
 
 echo %GAMEPATH%
 
