@@ -1,5 +1,11 @@
 ChangeLog:
 
+Version 0.9.2
+	fix technodes
+
+Version 0.9.1
+	remove RT art assets
+
 Version 0.9
 	direct antennas: 5M and 500G
 	relay antennas: 25M, 7G, 25G, 500G
