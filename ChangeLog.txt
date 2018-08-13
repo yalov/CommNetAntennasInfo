@@ -1,5 +1,8 @@
 ChangeLog:
 
+Version 0.9.3
+	fix bug in the ja-localization
+
 Version 0.9.2
 	fix technodes
 

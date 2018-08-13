@@ -14,10 +14,12 @@
         { "name": "RemoteTech" }
     ],
     "depends": [
-	{ "name": "RemoteTech-Antennas" }
+	{ "name": "RemoteTechRedevAntennas" }
+    ],
+    "recommends": [
+	{ "name": "CommunityPartsTitles" }
     ],
     "suggests": [
-        { "name": "SpeedUnitAnnex" },
-	{ "name": "CommunityPartsTitles" }
+        { "name": "SpeedUnitAnnex" }
     ]
 }
