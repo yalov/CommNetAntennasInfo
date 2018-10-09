@@ -15,11 +15,18 @@
     ],
     "depends": [
 	{ "name": "RemoteTechRedevAntennas" }
+        { "name": "ModuleManager" }
     ],
     "recommends": [
 	{ "name": "CommunityPartsTitles" }
     ],
     "suggests": [
         { "name": "SpeedUnitAnnex" }
+    ]
+    "install" : [
+            {
+                "file"       : "GameData/CommNetAntennasExtension",
+                "install_to" : "GameData"
+            }
     ]
 }
