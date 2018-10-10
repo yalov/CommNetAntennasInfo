@@ -1,9 +1,10 @@
 ChangeLog:
 
 Version 0.9.5
-	check working with RemoteTechRedevAntennas 1.1
-	fix grammar
+	check working with RemoteTechRedevAntennas 0.1.1
+	update desc
 	Russian localization
+	add MM to archive
 
 Version 0.9.3
 	fix bug in the ja-localization
