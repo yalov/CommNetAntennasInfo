@@ -70,7 +70,7 @@ echo Version:  %VERSION%
 rem Build the zip FILE
 cd %GAMEDATA%\..
 
-set FILE="%RELEASEDIR%\%GAMEDIR%-%VERSION%.zip"
+set FILE="%RELEASEDIR%\%GAMEDIR%-v%VERSION%.zip"
 IF EXIST %FILE% del /F %FILE%
 %ZIP% a -tzip %FILE% GameData
 

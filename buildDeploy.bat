@@ -1,7 +1,7 @@
 
 @echo off
 
-set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.4.5
+set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.5.0
 
 set MODNAME=CommNetAntennasExtension
 

@@ -1,9 +1,12 @@
 ChangeLog:
 
+Version 1.0.0
+	Recompile for KSP 1.5.0
+	Russian localization
+
 Version 0.9.5
 	check working with RemoteTechRedevAntennas 0.1.1
 	update desc
-	Russian localization
 	add MM to archive
 
 Version 0.9.3
