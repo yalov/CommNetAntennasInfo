@@ -1,8 +1,12 @@
 ChangeLog:
 
+Version 1.0.1
+	fixed RelayTech One antennaType (Relay)
+
 Version 1.0.0
 	Recompile for KSP 1.5.0
 	Russian localization
+	Update MM to 3.1.0
 
 Version 0.9.5
 	check working with RemoteTechRedevAntennas 0.1.1

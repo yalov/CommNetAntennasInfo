@@ -1,5 +1,8 @@
 ChangeLog:
 
+Version 1.0.1
+	fixed RelayTech One antennaType (Relay)
+
 Version 1.0.0
 	Recompile for KSP 1.5.0
 	Russian localization
