@@ -1,6 +1,10 @@
 ChangeLog:
 
+Version 1.0.2
+	fixed large power consumption of the HG-25
+
 Version 1.0.1
+	Recompile for KSP 1.5.1
 	fixed RelayTech One antennaType (Relay)
 
 Version 1.0.0
