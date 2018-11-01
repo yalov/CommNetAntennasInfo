@@ -1,5 +1,12 @@
 ChangeLog:
 
+Version 1.0.3
+	HG-25 is HG-32 now.
+	When this antenna was included, the purpose was to make 
+	InnerSOI Commnet Network reaching Minmus with 2 of those on each vessel.
+	But HG-25 doesn't make this true, because of Combinability, 
+	so the antenna-power was increased.
+
 Version 1.0.2
 	fixed large power consumption of the HG-25
 
