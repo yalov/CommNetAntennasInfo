@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTransmitterCombinableExponentInfo", "DataTransmitterCombinableExponentInfo\DataTransmitterCombinableExponentInfo.csproj", "{2DD8A562-8999-4719-8848-4436AD85FECA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommNetAntennasInfo", "CommNetAntennasInfo\CommNetAntennasInfo.csproj", "{2DD8A562-8999-4719-8848-4436AD85FECA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8709ADC0-0C86-4A6B-A5A2-2BF7C3BEE6FB}"
 	ProjectSection(SolutionItems) = preProject

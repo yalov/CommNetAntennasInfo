@@ -9,18 +9,11 @@ using KSP.Localization;
 
 namespace CommnetAntennaExtension
 {
-
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
     public class SituationModule : MonoBehaviour
     {
         CommNet.CommNetParams commNetParams;
         int CurrentTrackingStationIndex;
-
-        private double GetDSNPowerModified(float trackingStationLvl)
-        {
-            double dsnPower = GameVariables.Instance.GetDSNRange(trackingStationLvl);
-            return dsnPower * commNetParams.DSNModifier;
-        }
 
         private string SmartAlphaChannel(int i, bool start = true)
         {
@@ -30,8 +23,30 @@ namespace CommnetAntennaExtension
                 return start ? "<color=#ffffff7f>" : "</color>";
         }
 
+        private double GetPowerMostCommonInternalAntenna(List<AvailablePart> parts)
+        {
+            List<double> powers = new List<double>();
+
+            foreach (AvailablePart part in parts)
+            {
+                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
+                if (modules.Count != 1) continue;
+
+                ModuleDataTransmitter moduleDT = modules[0];
+                if (moduleDT.CommType != AntennaType.INTERNAL) continue;
+
+                powers.Add(moduleDT.CommPower);
+            }
+
+            if (powers.Count > 0)
+                return powers.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            else
+                return 5000;
+        }
+
         private void Start()
         {
+            
             commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             int LevelsTracking = 3;
 
@@ -45,26 +60,24 @@ namespace CommnetAntennaExtension
                 TrackingStationLvls[i] = (float)i / (LevelsTracking - 1);
 
             float CurrentTrackingStationLvl = ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation);
-            Logging.Log("CurrentTSLvl: " + CurrentTrackingStationLvl);
-            Logging.Log("CurrentTSDSN: " + GameVariables.Instance.GetDSNRange(CurrentTrackingStationLvl));
-
             CurrentTrackingStationIndex = TrackingStationLvls.IndexOf(CurrentTrackingStationLvl);
 
             double[] DSNPowerModified = new double[LevelsTracking];
             string[] DSNPowerModified_str = new string[LevelsTracking];
             for (int i = 0; i < LevelsTracking; i++)
             {
-                DSNPowerModified[i] = GetDSNPowerModified(i / (LevelsTracking - 1f));
+                double dsnPower = GameVariables.Instance.GetDSNRange(i / (LevelsTracking - 1f));
+                DSNPowerModified[i] = dsnPower * commNetParams.DSNModifier;
                 DSNPowerModified_str[i] = Formatter.ValueExtraShortSpaced(DSNPowerModified[i]);
             }
 
-            string BuiltInPowerModified_str = Formatter.ValueExtraShortSpaced(5000 * commNetParams.rangeModifier);
-
-
-            List<AvailablePart> parts = PartLoader.LoadedPartsList.Where
+            List<AvailablePart> partsDT = PartLoader.LoadedPartsList.Where
                     (p => p.partPrefab.Modules.GetModules<ModuleDataTransmitter>().Any()).ToList();
 
-            foreach (AvailablePart part in parts)
+            double BuiltInPowerModified = GetPowerMostCommonInternalAntenna(partsDT) * commNetParams.rangeModifier;
+            string BuiltInPowerModified_str = Formatter.ValueExtraShortSpaced(BuiltInPowerModified);
+            
+            foreach (AvailablePart part in partsDT)
             {
                 List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
 
@@ -76,25 +89,18 @@ namespace CommnetAntennaExtension
 
                 foreach (AvailablePart.ModuleInfo modinfo in modinfos)
                 {
-                    //# autoLOC_217939 = \n<color=#99ff00ff><b>Requires:</b></color>\n
-                    //# autoLOC_501004 = Electric Charge
-                    //# autoLOC_244197 = - <b><<1>>: </b><<2>>/sec.\n
-
                     if (modinfo.moduleName == moduleDT.GUIName)
                     {
                         double antennaPowerModified = moduleDT.antennaPower * commNetParams.rangeModifier;
-
 
                         string[] DSNranges_str = new string[LevelsTracking];
                         double[] DSNranges = new double[LevelsTracking];
                         for (int i = 0; i < LevelsTracking; i++)
                             DSNranges[i] = Math.Sqrt(DSNPowerModified[i] * antennaPowerModified);
 
-                        
-
                         if (moduleDT.CommType != AntennaType.INTERNAL)
                         {
-                            string BuiltInranges_str = Formatter.DistanceShort(Math.Sqrt(5000 * commNetParams.rangeModifier * antennaPowerModified));
+                            string BuiltInranges_str = Formatter.DistanceShort(Math.Sqrt(BuiltInPowerModified * antennaPowerModified));
 
                             for (int i = 0; i < LevelsTracking; i++)
                                 DSNranges_str[i] = Formatter.DistanceShort(DSNranges[i]);
@@ -150,7 +156,6 @@ namespace CommnetAntennaExtension
                             if (LevelsTracking % 4 == 0) modinfo.info += "</nobr>";
 
                             modinfo.info += Localizer.Format("#CAE_Orange", Localizer.Format("#autoLOC_236846"));  // #autoLOC_236846 = \n<i>Cannot transmit science</i>\n
-
                         }
                     }
                 }

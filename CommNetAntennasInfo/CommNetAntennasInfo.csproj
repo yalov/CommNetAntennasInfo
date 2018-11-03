@@ -7,8 +7,8 @@
     <ProjectGuid>{2DD8A562-8999-4719-8848-4436AD85FECA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataTransmitterCombinableExponentInfo</RootNamespace>
-    <AssemblyName>DataTransmitterCombinableExponentInfo</AssemblyName>
+    <RootNamespace>CommNetAntennasInfo</RootNamespace>
+    <AssemblyName>CommNetAntennasInfo</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,7 +34,8 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CBK.cs" />
+    <Compile Include="CommNetAntennasInfo.cs" />
+    <Compile Include="CustomBurmKit.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -43,7 +44,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyVersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="TransmitterModuleInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AssemblyVersion.tt">
