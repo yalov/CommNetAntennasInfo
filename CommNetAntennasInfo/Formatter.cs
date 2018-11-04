@@ -1,19 +1,32 @@
 ﻿using System;
 using System.Globalization;
+using KSP.Localization;
 
 namespace CommnetAntennaExtension
 {
 
     static class Formatter
     {
-        private static string[] SI = { "", "k", "M", "G", "T" };
-
-        private static string[] SI_Spaced = { "", "k ", "M", "G", "T  " }; //k-thin-thin // T-hair-hair
-
+        private static readonly string m = Localizer.Format("#CAE_meter");
+        private static readonly string digit_space = "\u2009\u2009\u200A";
         // " " - thin
         // " " - hair
-        // " " - figure - digit
 
+        private static readonly string[] SI = {"",
+            Localizer.Format("#CAE_kilo"),
+            Localizer.Format("#CAE_mega"),
+            Localizer.Format("#CAE_giga"),
+            Localizer.Format("#CAE_tera")
+        };
+
+        private static readonly string[] SI_Spaced = {"",
+            Localizer.Format("#CAE_kilo_spaced"),
+            Localizer.Format("#CAE_mega_spaced"),
+            Localizer.Format("#CAE_giga_spaced"),
+            Localizer.Format("#CAE_tera_spaced")
+        };
+
+        
         public static string ValueShortAll(double value, int digits = 3, bool forced = true)
         {
             double v = Math.Abs(value);
@@ -66,14 +79,14 @@ namespace CommnetAntennaExtension
             for (i = 0; v >= 1000 && i < SI.Length - 1; i++)
                 v /= 1000;
             // 2t+1h
-            if (v < 10)         return String.Format("      {0}{1}", Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i]);
-            else if (v < 100)   return String.Format("   {0}{1}", Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i]);
-            else if (v < 1000)  return String.Format("{0}{1}", Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i]);
+            if (v < 10)         return String.Format("{2}{0}{1}", Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i], digit_space + digit_space);
+            else if (v < 100)   return String.Format("{2}{0}{1}", Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i], digit_space);
+            else if (v < 1000)  return String.Format("{0}{1}",    Math.Round(Math.Sign(value) * v, 0), SI_Spaced[i]);
             else return value.ToString("0e0") + SI_Spaced[0];
         }
 
-        public static string DistanceShort(double value) => ValueShort(value) + "m";
-        public static string DistanceExtraShort(double value) => ValueExtraShort(value) + "m";
+        public static string DistanceShort(double value) => ValueShort(value) + m;
+        public static string DistanceExtraShort(double value) => ValueExtraShort(value) + m;
 
         public static string ToTitleCase(this string s) => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }

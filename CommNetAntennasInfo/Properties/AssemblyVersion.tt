@@ -6,22 +6,21 @@
 <#
 
 	// Instructions
-	// 1.  Add a new Text Template to the project
-	// 2.  Copy this file into the new template
+	// 1.  Add a new Text Template to the project       2.  Copy this file into the new template
 	// 3.  Update the string: versionfile with the complete path to the .version file
 	// 4.  Remove the following line from the file AssemblyInfo.cs (usually located in the "Property" folder inside your C# project):
 	//        [assembly: AssemblyVersion("1.0.0.0")]
 	// 5.  Add the following to the PreBuild steps:
 	//		set textTemplatingPath="%CommonProgramFiles(x86)%\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe"
-	//
 	//		if %textTemplatingPath%=="\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe" set textTemplatingPath="%CommonProgramFiles%\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe"
-	//
 	//		%textTemplatingPath% "$(ProjectDir)AssemblyFileVersion.tt"
+	//
+	// 5a. Or Add the following to the PreBuild steps: 
+	//     set textTemplatingPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\TextTransform.exe"  
+	//     %textTemplatingPath% -out "$(ProjectDir)Properties\AssemblyVersion.cs" "$(ProjectDir)Properties\AssemblyVersion.tt"
 
-    int major = 0; 
-    int minor = 0; 	
-    int build = 0; 
-	int patch = 0;
+	
+    int major = 0; int minor = 0; int build = 0; int patch = 0;
 	bool versionSection = false;
 
 	int i = 0;

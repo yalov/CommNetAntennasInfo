@@ -109,11 +109,14 @@ namespace CommnetAntennaExtension
                                 Localizer.Format("#autoLOC_7001005", Formatter.ToTitleCase(moduleDT.CommType.ToString()))
                                 + Localizer.Format("#autoLOC_7001006", Formatter.ValueShort(antennaPowerModified))
                                 + (moduleDT.CommCombinable
-                                    ? Localizer.Format("#CAE_Combinability_Exponent", moduleDT.CommCombinableExponent)
-                                    : Localizer.Format("#CAE_Not_Combinable"))
+                                ? Localizer.Format("#CAE_Combinability_Exponent", moduleDT.CommCombinableExponent)
+                                : Localizer.Format("#CAE_Not_Combinable"))
+                                + Localizer.Format("#CAE_Title_vs");
+                           
+                            
 
-                                + Localizer.Format("#CAE_Title_vs")
-                                + BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
+                            if (moduleDT.CommType == AntennaType.RELAY)
+                                modinfo.info += BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
                                 + Localizer.Format("#CAE_Spaces") + BuiltInranges_str + "\n";
 
                             for (int i = 0; i < LevelsTracking; i++)
@@ -130,8 +133,6 @@ namespace CommnetAntennaExtension
                                 + Localizer.Format("#CAE_NOB", Localizer.Format("#autoLOC_244332"))
                                 + Localizer.Format("#autoLOC_244197", Localizer.Format("#autoLOC_501004"/*Electric Charge*/),
                                 (moduleDT.packetResourceCost / moduleDT.packetInterval).ToString("F1"));
-
-
                         }
                         else
                         {

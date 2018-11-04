@@ -4,24 +4,15 @@
 rem Put the following text into the Post-build event command line:
 rem without the "rem":
 
-rem start /D D:\Users\jbb\github\IFI-Life-Support /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
-rem 
+rem start /D $(SolutionDir) /WAIT buildDeploy.bat  $(TargetDir) $(TargetFileName)
+rem  
 rem if $(ConfigurationName) == Release (
-rem 
-rem start /D D:\Users\jbb\github\IFI-Life-Support /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)
-rem 
+rem  
+rem start /D $(SolutionDir) /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)
+rem  
 rem )
 
-
 rem Set variables here
-
-rem H is the destination game folder
-rem GAMEDIR is the name of the mod folder (usually the mod name)
-rem GAMEDATA is the name of the local GameData
-rem VERSIONFILE is the name of the version file, usually the same as GAMEDATA,
-rem    but not always
-rem LICENSE is the license file
-rem README is the readme file
 
 set GAMEDIR=CommNetAntennasExtension
 set GAMEDATA="GameData\"
