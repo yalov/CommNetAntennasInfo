@@ -141,8 +141,12 @@ namespace CommnetAntennaExtension
                             for (int i = 0; i < LevelsTracking; i++)
                                 DSNranges_str[i] = Formatter.DistanceExtraShort(DSNranges[i]);
 
+                            string type = Formatter.ToTitleCase(moduleDT.CommType.displayDescription());
+                            //Internal - ok
+                            if (type.Length > 8) type = type.Substring(0, 7) + ".";
+                            
                             modinfo.info =
-                                Localizer.Format("#CAE_Type", Formatter.ToTitleCase(moduleDT.CommType.ToString())) + ", "
+                                Localizer.Format("#CAE_Type", type) + ", "
                                 + Localizer.Format("#CAE_Rating", Formatter.ValueShort(antennaPowerModified))
                                 + (moduleDT.CommCombinable ? ", e:" + moduleDT.CommCombinableExponent : "")
                                 + Localizer.Format("#CAE_DSN_Short") + " ";

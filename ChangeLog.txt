@@ -1,5 +1,8 @@
 ChangeLog:
 
+Version 1.1.1.1
+	Plugin: Localized Internal AntennaType
+
 Version 1.1.1
 	Plugin: Localized AntennaType
 
