@@ -106,10 +106,12 @@ namespace CommnetAntennaExtension
                                 DSNranges_str[i] = Formatter.DistanceShort(DSNranges[i]);
 
                             modinfo.info =
-                                Localizer.Format("#autoLOC_7001005", Formatter.ToTitleCase(moduleDT.CommType.ToString()))
+
+                            Localizer.Format("#autoLOC_7001005", Formatter.ToTitleCase(moduleDT.antennaType.displayDescription()))
                                 + Localizer.Format("#autoLOC_7001006", Formatter.ValueShort(antennaPowerModified))
                                 + (moduleDT.CommCombinable
                                 ? Localizer.Format("#CAE_Combinability_Exponent", moduleDT.CommCombinableExponent)
+                                
                                 : Localizer.Format("#CAE_Not_Combinable"))
                                 + Localizer.Format("#CAE_Title_vs");
                            

@@ -1,11 +1,15 @@
 ChangeLog:
 
+Version 1.1.1
+	Plugin: Localized AntennaType
+
+
 Version 1.1.0 (Plugin Update)
-    shows modified ratings (if you have changed power modifiers in the settings)
-    shows all DSN levels (Community Burn Kit supported)
-    shows DSN ratings, hightlights active DSN level, 
-    shows range to Built-in antenna for relays
-    compact version for internal antennas
+	shows modified ratings (if you have changed power modifiers in the settings)
+	shows all DSN levels (Custom Barn Kit supported)
+	shows DSN ratings, hightlights active DSN level, 
+	shows range to Built-in antenna for relays
+	compact version for internal antennas
 
 Version 1.0.3
 	HG-25 is HG-32 now.
