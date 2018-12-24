@@ -2,7 +2,7 @@
 using System.Globalization;
 using KSP.Localization;
 
-namespace CommnetAntennaExtension
+namespace CommnetAntennasInfo
 {
 
     static class Formatter

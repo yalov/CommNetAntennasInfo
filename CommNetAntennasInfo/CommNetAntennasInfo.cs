@@ -7,7 +7,7 @@ using KSP.Localization;
 
 
 
-namespace CommnetAntennaExtension
+namespace CommnetAntennasInfo
 {
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
     public class SituationModule : MonoBehaviour

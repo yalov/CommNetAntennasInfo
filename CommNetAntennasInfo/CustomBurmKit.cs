@@ -1,4 +1,4 @@
-﻿namespace CommnetAntennaExtension
+﻿namespace CommnetAntennasInfo
 {
     class CBK
     {

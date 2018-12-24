@@ -14,7 +14,7 @@ rem )
 
 rem Set variables here
 
-set GAMEDIR=CommNetAntennasExtension
+set GAMEDIR=CommNetAntennasInfo
 set GAMEDATA="GameData\"
 set VERSIONFILE=%GAMEDIR%.version
 set LICENSE=%GAMEDIR%-License.txt

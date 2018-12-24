@@ -1,5 +1,12 @@
 ChangeLog:
 
+Version 2.0.0
+	This plugin was exluded from the CommNet Antennas Extension mod.
+	Salute CommNet Antennas Info mod.
+
+
+CommNet Antennas Extension ChangeLog:
+
 Version 1.1.1.1
 	Plugin: Localized Internal AntennaType
 
