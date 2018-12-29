@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CommnetAntennasInfo
+namespace CommNetAntennasInfo
 {
     public static class Logging
     {
-        private static string PREFIX = "<color=green>CommnetAntennasInfo:</color> ";
+        private static string PREFIX = "<color=green>CommNetAntennasInfo:</color> ";
 
         public static void Log<T>(T msg)
         {

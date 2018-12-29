@@ -1,8 +1,13 @@
+This plugin was exluded from the "CommNet Antennas Extension"
+Salute the "CommNet Antennas Info"
+
 ChangeLog:
 
 Version 2.0.0
-	This plugin was exluded from the CommNet Antennas Extension mod.
-	Salute CommNet Antennas Info mod.
+	recompiled for ksp 1.6.0
+
+
+
 
 
 CommNet Antennas Extension ChangeLog:
@@ -12,7 +17,6 @@ Version 1.1.1.1
 
 Version 1.1.1
 	Plugin: Localized AntennaType
-
 
 Version 1.1.0 (Plugin Update)
 	shows modified ratings (if you have changed power modifiers in the settings)
@@ -58,5 +62,3 @@ Version 0.9
 	direct antennas: 5M and 500G
 	relay antennas: 25M, 7G, 25G, 500G
 	plugin for showing CombinabilityExponent in the VAB
-
-
