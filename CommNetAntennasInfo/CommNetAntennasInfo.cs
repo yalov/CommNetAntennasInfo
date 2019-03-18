@@ -48,25 +48,25 @@ namespace CommNetAntennasInfo
         {
             
             commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
-            int LevelsTracking = 3;
+            int TrackingLevels = 3;
 
             CBK cbk = new CBK();
             
             if (cbk.founded)
-                LevelsTracking = cbk.levelsTracking;
+                TrackingLevels = cbk.levelsTracking;
 
-            float[] TrackingStationLvls = new float[LevelsTracking];  //{ 0.0f, 0.5f, 1.0f };
-            for (int i = 0; i < LevelsTracking; i++)
-                TrackingStationLvls[i] = (float)i / (LevelsTracking - 1);
+            float[] TrackingStationFloats = new float[TrackingLevels];  //{ 0.0f, 0.5f, 1.0f };
+            for (int i = 0; i < TrackingLevels; i++)
+                TrackingStationFloats[i] = (float)i / (TrackingLevels - 1);
 
-            float CurrentTrackingStationLvl = ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation);
-            CurrentTrackingStationIndex = TrackingStationLvls.IndexOf(CurrentTrackingStationLvl);
+            float CurrentTrackingStationFloat = ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation);
+            CurrentTrackingStationIndex = TrackingStationFloats.IndexOf(CurrentTrackingStationFloat);
 
-            double[] DSNPowerModified = new double[LevelsTracking];
-            string[] DSNPowerModified_str = new string[LevelsTracking];
-            for (int i = 0; i < LevelsTracking; i++)
+            double[] DSNPowerModified = new double[TrackingLevels];
+            string[] DSNPowerModified_str = new string[TrackingLevels];
+            for (int i = 0; i < TrackingLevels; i++)
             {
-                double dsnPower = GameVariables.Instance.GetDSNRange(i / (LevelsTracking - 1f));
+                double dsnPower = GameVariables.Instance.GetDSNRange(TrackingStationFloats[i]);
                 DSNPowerModified[i] = dsnPower * commNetParams.DSNModifier;
                 DSNPowerModified_str[i] = Formatter.ValueExtraShortSpaced(DSNPowerModified[i]);
             }
@@ -93,16 +93,16 @@ namespace CommNetAntennasInfo
                     {
                         double antennaPowerModified = moduleDT.antennaPower * commNetParams.rangeModifier;
 
-                        string[] DSNranges_str = new string[LevelsTracking];
-                        double[] DSNranges = new double[LevelsTracking];
-                        for (int i = 0; i < LevelsTracking; i++)
+                        string[] DSNranges_str = new string[TrackingLevels];
+                        double[] DSNranges = new double[TrackingLevels];
+                        for (int i = 0; i < TrackingLevels; i++)
                             DSNranges[i] = Math.Sqrt(DSNPowerModified[i] * antennaPowerModified);
 
                         if (moduleDT.CommType != AntennaType.INTERNAL)
                         {
                             string BuiltInranges_str = Formatter.DistanceShort(Math.Sqrt(BuiltInPowerModified * antennaPowerModified));
 
-                            for (int i = 0; i < LevelsTracking; i++)
+                            for (int i = 0; i < TrackingLevels; i++)
                                 DSNranges_str[i] = Formatter.DistanceShort(DSNranges[i]);
 
                             modinfo.info =
@@ -121,7 +121,7 @@ namespace CommNetAntennasInfo
                                 modinfo.info += BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
                                 + Localizer.Format("#CAE_Spaces") + BuiltInranges_str + "\n";
 
-                            for (int i = 0; i < LevelsTracking; i++)
+                            for (int i = 0; i < TrackingLevels; i++)
                                 modinfo.info += 
                                     SmartAlphaChannel(i) +
                                         DSNPowerModified_str[i] + Localizer.Format("#CAE_DSN_LN", i + 1) 
@@ -138,7 +138,7 @@ namespace CommNetAntennasInfo
                         }
                         else
                         {
-                            for (int i = 0; i < LevelsTracking; i++)
+                            for (int i = 0; i < TrackingLevels; i++)
                                 DSNranges_str[i] = Formatter.DistanceExtraShort(DSNranges[i]);
 
                             string type = Formatter.ToTitleCase(moduleDT.CommType.displayDescription());
@@ -152,15 +152,15 @@ namespace CommNetAntennasInfo
                                 + Localizer.Format("#CAE_DSN_Short") + " ";
 
 
-                            if (LevelsTracking % 4 == 0) modinfo.info += "<nobr>";
+                            if (TrackingLevels % 4 == 0) modinfo.info += "<nobr>";
 
-                            for (int i = 0; i < LevelsTracking; i++)
+                            for (int i = 0; i < TrackingLevels; i++)
                                 modinfo.info += 
                                     SmartAlphaChannel(i) + 
-                                        DSNranges_str[i] + (i != (LevelsTracking - 1)?", ":"") + 
+                                        DSNranges_str[i] + (i != (TrackingLevels - 1)?", ":"") + 
                                     SmartAlphaChannel(i, false);
 
-                            if (LevelsTracking % 4 == 0) modinfo.info += "</nobr>";
+                            if (TrackingLevels % 4 == 0) modinfo.info += "</nobr>";
 
                             modinfo.info += Localizer.Format("#CAE_Orange", Localizer.Format("#autoLOC_236846"));  // #autoLOC_236846 = \n<i>Cannot transmit science</i>\n
                         }

@@ -18,7 +18,7 @@ set GAMEDIR=CommNetAntennasInfo
 set GAMEDATA="GameData\"
 set VERSIONFILE=%GAMEDIR%.version
 set LICENSE=%GAMEDIR%-License.txt
-set CHANGELOG=ChangeLog.txt
+set CHANGELOG=ChangeLog.md
 
 set RELEASEDIR=Releases
 set ZIP="c:\Program Files\7-zip\7z.exe"
