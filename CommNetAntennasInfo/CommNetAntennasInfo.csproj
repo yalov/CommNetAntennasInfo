@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CommNetAntennasInfo.cs" />
+    <Compile Include="CommNetAntennasInfoFlight.cs" />
     <Compile Include="CustomBurmKit.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="Logging.cs" />
@@ -63,13 +64,12 @@ set textTemplatingPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Comm
 %25textTemplatingPath%25 -out "$(ProjectDir)Properties\AssemblyVersion.cs" "$(ProjectDir)Properties\AssemblyVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>start /D $(SolutionDir) /WAIT buildDeploy.bat  $(TargetDir) $(TargetFileName)
- 
+    <PostBuildEvent>cd "$(SolutionDir)"
+
+call  "$(SolutionDir)\buildDeploy.bat" "$(TargetDir)" "$(TargetFileName)"
+
 if $(ConfigurationName) == Release (
- 
-start /D $(SolutionDir) /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)
- 
-)
-</PostBuildEvent>
+call "$(SolutionDir)\buildRelease.bat" "$(TargetDir)" "$(TargetFileName)"
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>
