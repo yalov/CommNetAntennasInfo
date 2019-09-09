@@ -1,10 +1,12 @@
 ChangeLog:
 
+## Version 2.1.2
+ * remove unused patch filter
+
 ## Version 2.1.1
  * PAW: fix default rating
  * PAW: compact for internal antenna, 
  * update MM 4.0.3
-
 
 ## Version 2.1.0
  * Antenna Type and CombinabilityExponent in the PAW (Part-Action-Window)
