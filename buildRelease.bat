@@ -2,7 +2,7 @@
 @echo off
 echo BUILDRELEASE.BAT
 
-rem v3
+rem v4
 rem Put the following text into the Post-build event command line:
 rem without the "REM":
 
@@ -47,6 +47,6 @@ echo Version:  %VERSION%
 
 set FILE="%RELEASESDIR%\%MODNAME%-v%VERSION%.zip"
 IF EXIST %FILE% del /F %FILE%
-%ZIP% a -tzip %FILE% GameData | findstr "Archive archive Everything"
+%ZIP% a -tzip %FILE% GameData | findstr /I "archive everything"
 
 rem pause

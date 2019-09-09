@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace CommNetAntennasInfo
 {
     public static class Logging
     {
-        private static string PREFIX = "<color=green>CommNetAntennasInfo:</color> ";
+        private const string PREFIX = "<color=green>[KVASS]</color> ";
+        private const bool time = false;
 
-        public static void Log<T>(T msg)
+        public static void Log<T>(T msg, params object[] args)
         {
-            Debug.Log(PREFIX + DateTime.Now.ToString("hh:mm:ss.f ") + msg.ToString());
-        }
+            if (msg == null) { Log("null " + args); return; }
 
-        public static void Log(string msg, params object[] arg)
-        {
-            Debug.Log(PREFIX + DateTime.Now.ToString("hh:mm:ss.f ") + String.Format(msg, arg));
+            Debug.Log(PREFIX +
+                (time ? DateTime.Now.ToString("HH:mm:ss.f ", CultureInfo.InvariantCulture) : "") +
+                String.Format(CultureInfo.InvariantCulture, msg.ToString(), args)
+                );
         }
     }
 }

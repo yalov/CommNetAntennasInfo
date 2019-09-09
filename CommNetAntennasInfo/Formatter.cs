@@ -66,7 +66,7 @@ namespace CommNetAntennasInfo
             for (i = 0; v >= 1000 && i < SI.Length - 1; i++)
                 v /= 1000;
 
-            if (v < 10) return Math.Round(Math.Sign(value) * v, 1) + SI[i];
+            if (v < 10)        return Math.Round(Math.Sign(value) * v, 1) + SI[i];
             else if (v < 1000) return Math.Round(Math.Sign(value) * v, 0) + SI[i];
             else return value.ToString("0e0") + SI[0];
         }
