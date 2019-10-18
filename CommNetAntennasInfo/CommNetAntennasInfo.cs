@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using KSP.Localization;
-
-
+using System.Linq;
 
 
 namespace CommNetAntennasInfo
@@ -12,38 +10,6 @@ namespace CommNetAntennasInfo
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
     public class SituationModule : MonoBehaviour
     {
-        CommNet.CommNetParams commNetParams;
-        int CurrentTrackingStationIndex;
-
-        private string SmartAlphaChannel(int i, bool start = true)
-        {
-            if (i == CurrentTrackingStationIndex)
-                return start ? "<color=#ffffffff>" : "</color>";
-            else
-                return start ? "<color=#ffffff7f>" : "</color>";
-        }
-
-        private double GetPowerMostCommonInternalAntenna(List<AvailablePart> parts)
-        {
-            List<double> powers = new List<double>();
-
-            foreach (AvailablePart part in parts)
-            {
-                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
-                if (modules.Count != 1) continue;
-
-                ModuleDataTransmitter moduleDT = modules[0];
-                if (moduleDT.CommType != AntennaType.INTERNAL) continue;
-
-                powers.Add(moduleDT.CommPower);
-            }
-
-            if (powers.Count > 0)
-                return powers.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
-            else
-                return 5000;
-        }
-
         private void Start()
         {
             
@@ -80,93 +46,131 @@ namespace CommNetAntennasInfo
             foreach (AvailablePart part in partsDT)
             {
                 List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
+                if (modules.Count == 0) continue;
 
-                if (modules.Count != 1) continue;
+                var modinfos = part.moduleInfos.Where(i => i.moduleName == modules[0].GUIName).ToList();
 
-                ModuleDataTransmitter moduleDT = modules[0];
+                if (modules.Count != modinfos.Count) continue;
 
-                List<AvailablePart.ModuleInfo> modinfos = part.moduleInfos;
-
-                foreach (AvailablePart.ModuleInfo modinfo in modinfos)
+                for (int index= 0; index < modules.Count ; index++)
                 {
-                    if (modinfo.moduleName == moduleDT.GUIName)
+                    ModuleDataTransmitter moduleDT = modules[index];
+                    AvailablePart.ModuleInfo modinfo = modinfos[index];
+
+                    double antennaPowerModified = moduleDT.antennaPower * commNetParams.rangeModifier;
+
+                    string[] DSNranges_str = new string[TrackingLevels];
+                    double[] DSNranges = new double[TrackingLevels];
+                    for (int i = 0; i < TrackingLevels; i++)
+                        DSNranges[i] = Math.Sqrt(DSNPowerModified[i] * antennaPowerModified);
+
+                    if (moduleDT.CommType != AntennaType.INTERNAL)
                     {
-                        double antennaPowerModified = moduleDT.antennaPower * commNetParams.rangeModifier;
+                        string BuiltInranges_str = Formatter.DistanceShort(Math.Sqrt(BuiltInPowerModified * antennaPowerModified));
 
-                        string[] DSNranges_str = new string[TrackingLevels];
-                        double[] DSNranges = new double[TrackingLevels];
                         for (int i = 0; i < TrackingLevels; i++)
-                            DSNranges[i] = Math.Sqrt(DSNPowerModified[i] * antennaPowerModified);
+                            DSNranges_str[i] = Formatter.DistanceShort(DSNranges[i]);
 
-                        if (moduleDT.CommType != AntennaType.INTERNAL)
-                        {
-                            string BuiltInranges_str = Formatter.DistanceShort(Math.Sqrt(BuiltInPowerModified * antennaPowerModified));
+                        modinfo.info =
 
-                            for (int i = 0; i < TrackingLevels; i++)
-                                DSNranges_str[i] = Formatter.DistanceShort(DSNranges[i]);
-
-                            modinfo.info =
-
-                            Localizer.Format("#autoLOC_7001005", Formatter.ToTitleCase(moduleDT.antennaType.displayDescription()))
-                                + Localizer.Format("#autoLOC_7001006", Formatter.ValueShort(antennaPowerModified))
-                                + (moduleDT.CommCombinable
-                                ? Localizer.Format("#CAE_Combinability_Exponent", moduleDT.CommCombinableExponent)
+                        Localizer.Format("#autoLOC_7001005", Formatter.ToTitleCase(moduleDT.antennaType.displayDescription()))
+                            + Localizer.Format("#autoLOC_7001006", Formatter.ValueShort(antennaPowerModified))
+                            + (moduleDT.CommCombinable
+                            ? Localizer.Format("#CAE_Combinability_Exponent", moduleDT.CommCombinableExponent)
                                 
-                                : Localizer.Format("#CAE_Not_Combinable"))
-                                + Localizer.Format("#CAE_Title_vs");
+                            : Localizer.Format("#CAE_Not_Combinable"))
+                            + Localizer.Format("#CAE_Title_vs");
                            
                             
 
-                            if (moduleDT.CommType == AntennaType.RELAY)
-                                modinfo.info += BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
-                                + Localizer.Format("#CAE_Spaces") + BuiltInranges_str + "\n";
+                        if (moduleDT.CommType == AntennaType.RELAY)
+                            modinfo.info += BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
+                            + Localizer.Format("#CAE_Spaces") + BuiltInranges_str + "\n";
 
-                            for (int i = 0; i < TrackingLevels; i++)
-                                modinfo.info += 
-                                    SmartAlphaChannel(i) +
-                                        DSNPowerModified_str[i] + Localizer.Format("#CAE_DSN_LN", i + 1) 
-                                        + Localizer.Format("#CAE_Spaces") + DSNranges_str[i]
-                                    + SmartAlphaChannel(i, false) + "\n";
+                        for (int i = 0; i < TrackingLevels; i++)
+                            modinfo.info += 
+                                SmartAlphaChannel(i) +
+                                    DSNPowerModified_str[i] + Localizer.Format("#CAE_DSN_LN", i + 1) 
+                                    + Localizer.Format("#CAE_Spaces") + DSNranges_str[i]
+                                + SmartAlphaChannel(i, false) + "\n";
 
-                            modinfo.info += Localizer.Format("#autoLOC_236840"/*\n<b>Packet size: </b><<1>> Mits\n*/, moduleDT.packetSize.ToString("F1"))                                
-                                + Localizer.Format("#autoLOC_236841"/*<b>Bandwidth: </b><<1>> Mits/sec\n*/, (moduleDT.packetSize / moduleDT.packetInterval).ToString("F2"))    
+                        modinfo.info += Localizer.Format("#autoLOC_236840"/*\n<b>Packet size: </b><<1>> Mits\n*/, moduleDT.packetSize.ToString("F1"))
+                            + Localizer.Format("#autoLOC_236841"/*<b>Bandwidth: </b><<1>> Mits/sec\n*/, (moduleDT.packetSize / moduleDT.packetInterval).ToString("F2"))
 
-                                + Localizer.Format("#autoLOC_236842"/*\n\nWhen Transmitting:*/)
-                                + Localizer.Format("#CAE_NOB", Localizer.Format("#autoLOC_244332"))
-                                + Localizer.Format("#autoLOC_244197", Localizer.Format("#autoLOC_501004"/*Electric Charge*/),
-                                (moduleDT.packetResourceCost / moduleDT.packetInterval).ToString("F1"));
-                        }
-                        else
-                        {
-                            for (int i = 0; i < TrackingLevels; i++)
-                                DSNranges_str[i] = Formatter.DistanceExtraShort(DSNranges[i]);
-
-                            string type = Formatter.ToTitleCase(moduleDT.CommType.displayDescription());
-                            //Internal - ok
-                            if (type.Length > 8) type = type.Substring(0, 7) + ".";
+                            + "\n"+Localizer.Format("#autoLOC_236842"/*\n\nWhen Transmitting:*/).Trim()
+                            //+ Localizer.Format("#CAE_NOB", Localizer.Format("#autoLOC_244332"))
+                            //+ Localizer.Format("#autoLOC_244197", Localizer.Format("#autoLOC_501004"/*Electric Charge*/),
+                            //(moduleDT.packetResourceCost / moduleDT.packetInterval).ToString("F1"))
+                            //+ Localizer.Format("#CAE_Thriftiness", moduleDT.DataResourceCost.ToString("#.##")) 
                             
-                            modinfo.info =
-                                Localizer.Format("#CAE_Type", type) + ", "
-                                + Localizer.Format("#CAE_Rating", Formatter.ValueShort(antennaPowerModified))
-                                + (moduleDT.CommCombinable ? ", e:" + moduleDT.CommCombinableExponent : "")
-                                + Localizer.Format("#CAE_DSN_Short") + " ";
+                            + Localizer.Format("#CAE_Consumption", moduleDT.DataResourceCost.ToString("#.#"))
+                            ;
 
 
-                            if (TrackingLevels % 4 == 0) modinfo.info += "<nobr>";
+                    }
+                    else // INTERNAL
+                    {
+                        for (int i = 0; i < TrackingLevels; i++)
+                            DSNranges_str[i] = Formatter.DistanceExtraShort(DSNranges[i]);
 
-                            for (int i = 0; i < TrackingLevels; i++)
-                                modinfo.info += 
-                                    SmartAlphaChannel(i) + 
-                                        DSNranges_str[i] + (i != (TrackingLevels - 1)?", ":"") + 
-                                    SmartAlphaChannel(i, false);
+                        string type = Formatter.ToTitleCase(moduleDT.CommType.displayDescription());
+                        //Internal - ok
+                        if (type.Length > 8) type = type.Substring(0, 7) + ".";
+                            
+                        modinfo.info =
+                            Localizer.Format("#CAE_Type", type) + ", "
+                            + Localizer.Format("#CAE_Rating", Formatter.ValueShort(antennaPowerModified))
+                            + (moduleDT.CommCombinable ? ", e:" + moduleDT.CommCombinableExponent : "")
+                            + Localizer.Format("#CAE_DSN_Short") + " ";
 
-                            if (TrackingLevels % 4 == 0) modinfo.info += "</nobr>";
 
-                            modinfo.info += Localizer.Format("#CAE_Orange", Localizer.Format("#autoLOC_236846"));  // #autoLOC_236846 = \n<i>Cannot transmit science</i>\n
-                        }
+                        if (TrackingLevels % 4 == 0) modinfo.info += "<nobr>";
+
+                        for (int i = 0; i < TrackingLevels; i++)
+                            modinfo.info += 
+                                SmartAlphaChannel(i) + 
+                                    DSNranges_str[i] + (i != (TrackingLevels - 1)?", ":"") + 
+                                SmartAlphaChannel(i, false);
+
+                        if (TrackingLevels % 4 == 0) modinfo.info += "</nobr>";
+
+                        modinfo.info += Localizer.Format("#CAE_Orange", Localizer.Format("#autoLOC_236846"));  // #autoLOC_236846 = \n<i>Cannot transmit science</i>\n
                     }
                 }
             }
         }
+
+        private string SmartAlphaChannel(int i, bool start = true)
+        {
+            if (i == CurrentTrackingStationIndex)
+                return start ? "<color=#ffffffff>" : "</color>";
+            else
+                return start ? "<color=#ffffff7f>" : "</color>";
+        }
+
+        private double GetPowerMostCommonInternalAntenna(List<AvailablePart> parts)
+        {
+            List<double> powers = new List<double>();
+
+            foreach (AvailablePart part in parts)
+            {
+                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
+                if (modules.Count != 1) continue;
+
+                ModuleDataTransmitter moduleDT = modules[0];
+                if (moduleDT.CommType != AntennaType.INTERNAL) continue;
+
+                powers.Add(moduleDT.CommPower);
+            }
+
+            if (powers.Count > 0)
+                return powers.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            else
+                return 5000;
+        }
+
+        CommNet.CommNetParams commNetParams;
+        int CurrentTrackingStationIndex;
+
     }
 }

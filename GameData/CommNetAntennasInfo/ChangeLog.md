@@ -1,5 +1,13 @@
 ChangeLog:
 
+## Version 2.2.0
+ * recompiled for ksp 1.8.0
+ * showed "Consumption" as EC/Mit
+ * hided "Antenna State" for Internal Antennas, because they can't transmit science
+ * supported parts with several ModuleDataTransmitters
+ * updated MM 4.1.0
+ * targeted .NET 4.7.2
+
 ## Version 2.1.2
  * remove unused patch filter
 
