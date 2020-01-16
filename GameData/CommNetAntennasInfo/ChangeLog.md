@@ -1,5 +1,8 @@
 ChangeLog:
 
+## Version 2.3.2
+ * Fix not-extendable antennas
+
 ## Version 2.3.1
  * Updated translation
 

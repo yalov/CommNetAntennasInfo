@@ -60,6 +60,9 @@ namespace CommNetAntennasInfo
             if (MDAs.Count == 1)
                 moduleDeployable = MDAs[0];
 
+            if (moduleDeployable == null)
+                Activate();
+
             double rate = this.resHandler.inputResources[0].rate;
             ECConsumptionStr = Formatter.StringRate(rate);
 
@@ -89,7 +92,7 @@ namespace CommNetAntennasInfo
             if (MDAs.Count == 1)
                 moduleDeployable = MDAs[0];
 
-            if (moduleDeployable = null)
+            if (moduleDeployable == null)
                 text += Localizer.Format("#CAE_ConsumptionMessage");
             else
                 text += Localizer.Format("#CAE_ConsumptionMessageExt");
