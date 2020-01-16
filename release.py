@@ -134,7 +134,7 @@ def publish_to_github(token, mod_name, version, last_change, is_draft, is_prerel
     gitrepo = Repo(os.getcwd())
     try:
         gitrepo.remotes.origin.fetch()
-	except:
+    except:
         print(" * fetch() failed, check ssh from the cmd")
     else:
         print(" * success.")

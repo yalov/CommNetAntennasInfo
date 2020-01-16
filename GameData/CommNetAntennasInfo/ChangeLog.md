@@ -1,5 +1,8 @@
 ChangeLog:
 
+## Version 2.3.1
+ * Updated translation
+
 ## Version 2.3.0
  * support for NF Exploration
  * new Extras - CommNetAntennasConsumptor on CKAN - enable ModuleGeneratorAntenna, 
