@@ -1,5 +1,12 @@
 ChangeLog:
 
+## Version 2.3.0
+ * support for NF Exploration
+ * new Extras - CommNetAntennasConsumptor on CKAN - enable ModuleGeneratorAntenna, 
+   which makes antennas consume EC for supporting CommNet (always, when extended)
+ * recompiled for ksp 1.8.1
+ * updated MM 4.1.3
+
 ## Version 2.2.0
  * recompiled for ksp 1.8.0
  * showed "Consumption" as EC/Mit

@@ -6,7 +6,7 @@ namespace CommNetAntennasInfo
 {
     public static class Logging
     {
-        private const string PREFIX = "<color=green>[KVASS]</color> ";
+        private const string PREFIX = "<color=green>[CNAInfo]</color> ";
         private const bool time = false;
 
         public static void Log<T>(T msg, params object[] args)

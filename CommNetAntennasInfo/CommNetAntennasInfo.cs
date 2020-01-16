@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KSP.Localization;
 using System.Linq;
+using static CommNetAntennasInfo.Logging;
 
 
 namespace CommNetAntennasInfo
@@ -38,18 +39,25 @@ namespace CommNetAntennasInfo
             }
 
             List<AvailablePart> partsDT = PartLoader.LoadedPartsList.Where
-                    (p => p.partPrefab.Modules.GetModules<ModuleDataTransmitter>().Any()).ToList();
+                    (p => p.partPrefab.Modules.OfType<ModuleDataTransmitter>().Any()).ToList();
+
+            //Log("partsDT.count: " + partsDT.Count);
 
             double BuiltInPowerModified = GetPowerMostCommonInternalAntenna(partsDT) * commNetParams.rangeModifier;
             string BuiltInPowerModified_str = Formatter.ValueExtraShortSpaced(BuiltInPowerModified);
             
             foreach (AvailablePart part in partsDT)
             {
-                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
+                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.OfType<ModuleDataTransmitter>().ToList();
+                //Log("modules.count: " + modules.Count);
                 if (modules.Count == 0) continue;
 
-                var modinfos = part.moduleInfos.Where(i => i.moduleName == modules[0].GUIName).ToList();
-
+                //foreach (var i in part.moduleInfos)
+                    //Log(i.moduleName + " " + modules[0].GUIName);
+                    
+                
+                var modinfos = part.moduleInfos.Where(i => modules[0].GUIName.Contains(i.moduleName)).ToList();
+                //Log("modinfos.count: " + modinfos.Count);
                 if (modules.Count != modinfos.Count) continue;
 
                 for (int index= 0; index < modules.Count ; index++)
@@ -103,7 +111,8 @@ namespace CommNetAntennasInfo
                             //(moduleDT.packetResourceCost / moduleDT.packetInterval).ToString("F1"))
                             //+ Localizer.Format("#CAE_Thriftiness", moduleDT.DataResourceCost.ToString("#.##")) 
                             
-                            + Localizer.Format("#CAE_Consumption", moduleDT.DataResourceCost.ToString("#.#"))
+                            + Localizer.Format("#CAE_Consumption",
+                            Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.#")))
                             ;
 
 
@@ -154,7 +163,7 @@ namespace CommNetAntennasInfo
 
             foreach (AvailablePart part in parts)
             {
-                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.GetModules<ModuleDataTransmitter>();
+                List<ModuleDataTransmitter> modules = part.partPrefab.Modules.OfType<ModuleDataTransmitter>().ToList();
                 if (modules.Count != 1) continue;
 
                 ModuleDataTransmitter moduleDT = modules[0];
@@ -171,6 +180,5 @@ namespace CommNetAntennasInfo
 
         CommNet.CommNetParams commNetParams;
         int CurrentTrackingStationIndex;
-
     }
 }

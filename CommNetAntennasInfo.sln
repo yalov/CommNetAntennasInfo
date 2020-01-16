@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommNetAntennasInfo", "CommNetAntennasInfo\CommNetAntennasInfo.csproj", "{2DD8A562-8999-4719-8848-4436AD85FECA}"
 EndProject
@@ -10,8 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		buildDeploy.bat = buildDeploy.bat
 		buildRelease.bat = buildRelease.bat
 		ChangeLog.md = ChangeLog.md
-		GameData\CommNetAntennasInfo\Plugins\CommNetAntennasInfo.cfg = GameData\CommNetAntennasInfo\Plugins\CommNetAntennasInfo.cfg
 		CommNetAntennasInfo.version = CommNetAntennasInfo.version
+		GameData\CommNetAntennasInfo\Configs\ModuleAntennaInfo.cfg = GameData\CommNetAntennasInfo\Configs\ModuleAntennaInfo.cfg
+		GameData\CommNetAntennasConsumptor\GameData\CommNetAntennasInfo\Configs\ModuleGeneratorAntenna.cfg = GameData\CommNetAntennasConsumptor\GameData\CommNetAntennasInfo\Configs\ModuleGeneratorAntenna.cfg
 		README.md = README.md
 	EndProjectSection
 EndProject

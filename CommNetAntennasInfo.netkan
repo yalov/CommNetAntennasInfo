@@ -10,15 +10,28 @@
     "resources" : {
         "homepage": "https://forum.kerbalspaceprogram.com/index.php?/topic/177292-*"
     },
+    "tags": [
+        "plugin",
+        "information",
+        "comms"
+    ],
     "conflicts": [
         { "name": "RemoteTech" }
     ],
     "recommends": [
-        { "name": "CommNetAntennasExtension" }
+        { "name": "CommNetAntennasExtension" },
+        { "name": "CommNetAntennasConsumptor" }
+
     ],
     "suggests": [
         { "name": "SpeedUnitAnnex" },
-	{ "name": "ScienceLabInfo" },
-	{ "name": "ScienceSituationInfo" }
+        { "name": "ScienceLabInfo" },
+        { "name": "ScienceSituationInfo" }
+    ],
+    "install" : [
+            {
+                "file"       : "GameData/CommNetAntennasInfo",
+                "install_to" : "GameData"
+            }
     ]
 }

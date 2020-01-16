@@ -88,6 +88,19 @@ namespace CommNetAntennasInfo
         public static string DistanceShort(double value) => ValueShort(value) + m;
         public static string DistanceExtraShort(double value) => ValueExtraShort(value) + m;
 
+
+        public static string StringRate(double value)
+        {
+            double v = Math.Abs(value);
+
+            if      (v > 1.0 / 10)                            return Localizer.Format("#CAE_EC_S", value.ToString("F1"));
+            else if (v > 1.0 / 60)                            return Localizer.Format("#CAE_EC_M", (value * 60).ToString("F1"));
+            else if (v > 1.0 / 3600)                          return Localizer.Format("#CAE_EC_H", (value * 3600).ToString("F1")); 
+            else if (v > 1.0 / KSPUtil.dateTimeFormatter.Day) return Localizer.Format("#CAE_EC_D", (value * KSPUtil.dateTimeFormatter.Day).ToString("F1")); 
+            else                                              return Localizer.Format("#CAE_EC_Y", (value * KSPUtil.dateTimeFormatter.Year).ToString("F1")); 
+        }
+
+
         public static string ToTitleCase(this string s) => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }
 }

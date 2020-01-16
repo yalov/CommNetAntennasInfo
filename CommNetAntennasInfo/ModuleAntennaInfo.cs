@@ -1,12 +1,19 @@
 ﻿
 using KSP.Localization;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using static CommNetAntennasInfo.Logging;
 
 namespace CommNetAntennasInfo
 {
     public class ModuleAntennaInfo : PartModule
     {
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001352")]
+        string StatusStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001428")]
+        string AntennaStateStr;
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type")]
         string AntennaTypeStr;
 
@@ -16,15 +23,32 @@ namespace CommNetAntennasInfo
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true)]
         string CombinabilityExponentStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = false, guiName = "#CAE_PAW_Consumption", advancedTweakable = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
         string DataResourceCostStr;
+
+        ModuleDeployableAntenna moduleDA;
+        ModuleDataTransmitter moduleDT;
+
+        void LateUpdate()
+        {
+            if (moduleDA)
+                StatusStr = moduleDA.status;
+
+            if (moduleDT)
+                AntennaStateStr = moduleDT.statusText;
+
+        }
+
 
 
         public void Start()
         {
-            CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
-            List<ModuleDataTransmitter> MDTs = part.Modules.GetModules<ModuleDataTransmitter>();
             
+
+            CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
+            List<ModuleDataTransmitter> MDTs = part.Modules.OfType<ModuleDataTransmitter>().ToList();
+            List<ModuleDeployableAntenna> MDAs = part.Modules.OfType<ModuleDeployableAntenna>().ToList();
+
             if (MDTs.Count != 1)
             {
                 foreach (var mdt in MDTs)
@@ -44,12 +68,27 @@ namespace CommNetAntennasInfo
                 return;
             }
 
-            ModuleDataTransmitter moduleDT = MDTs[0];
-            
-             
+            moduleDT = MDTs[0];
+
             //ModuleDeployableAntenna
+            // status | Status | Retracted Retracting.. Extended Extending..
+            //moduleDA.status
+
             //statusText   Antenna State   Idle
             //moduleDT.statusText;
+
+            if (MDAs.Count == 1)
+            {
+                moduleDA = MDAs[0];
+                moduleDA.Fields["status"].guiActive = false;
+                moduleDA.Fields["status"].guiActiveEditor = false;
+                Fields["StatusStr"].guiActive = true;
+                Fields["StatusStr"].guiActiveEditor = true;
+            }
+
+            moduleDT.Fields["statusText"].guiActive = false;
+            moduleDT.Fields["statusText"].guiActiveEditor = false;
+
             moduleDT.Fields["powerText"].guiActive = false;
             moduleDT.Fields["powerText"].guiActiveEditor = false;
 
@@ -57,7 +96,7 @@ namespace CommNetAntennasInfo
 
             AntennaRatingStr = Formatter.ValueShort(antennaPowerModified);
             AntennaTypeStr = Formatter.ToTitleCase(moduleDT.antennaType.displayDescription());
-            DataResourceCostStr = Localizer.Format("#CAE_PAW_EC_Mit", moduleDT.DataResourceCost.ToString("#.##"));
+            DataResourceCostStr = Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.##"));
 
             if (moduleDT.antennaCombinable)
             {
@@ -91,5 +130,7 @@ namespace CommNetAntennasInfo
                 }
             }
         }
+
+
     }
 }

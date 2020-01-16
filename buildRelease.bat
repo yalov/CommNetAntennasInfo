@@ -2,7 +2,7 @@
 @echo off
 echo BUILDRELEASE.BAT
 
-rem v4
+rem v5
 rem Put the following text into the Post-build event command line:
 rem without the "REM":
 
@@ -28,7 +28,7 @@ if "%CHANGELOG%" NEQ "" xcopy "%CHANGELOG%" "GameData\%MODNAME%" /Y /I /Q
 
 
 REM The following requires the JQ program, available here: https://stedolan.github.io/jq/download/
-set JD=C:\ProgramData\chocolatey\lib\jq\tools\jq.exe
+set JD="C:\Tools\jq-win64.exe"
 
 %JD%  ".VERSION.MAJOR" %VERSIONFILE% >tmpfile
 set /P major=<tmpfile
