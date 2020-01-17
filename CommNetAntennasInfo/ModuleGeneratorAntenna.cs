@@ -23,6 +23,7 @@ namespace CommNetAntennasInfo
         //    Log("OnAnimationGroupStateChanged: " + data0 + " " + data1);
         //}
 
+     
         public void LateUpdate()
         {
             if (moduleDeployable != null)
@@ -60,7 +61,7 @@ namespace CommNetAntennasInfo
             if (MDAs.Count == 1)
                 moduleDeployable = MDAs[0];
 
-            if (moduleDeployable == null)
+            if (HighLogic.LoadedScene == GameScenes.FLIGHT && moduleDeployable == null)
                 Activate();
 
             double rate = this.resHandler.inputResources[0].rate;
