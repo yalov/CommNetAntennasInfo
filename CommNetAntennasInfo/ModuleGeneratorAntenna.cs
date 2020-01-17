@@ -26,7 +26,7 @@ namespace CommNetAntennasInfo
      
         public void LateUpdate()
         {
-            if (moduleDeployable != null)
+            if (HighLogic.LoadedScene == GameScenes.FLIGHT && moduleDeployable != null)
             {
                 if (moduleDeployable.deployState == ModuleDeployablePart.DeployState.EXTENDED)
                 {
