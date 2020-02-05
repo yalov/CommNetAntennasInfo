@@ -13,11 +13,6 @@ namespace CommNetAntennasInfo
 
         ModuleDeployableAntenna moduleDeployable;
 
-        public override string GetModuleDisplayName()
-        {
-            return Localizer.Format("#CAE_ModuleGeneratorAntennaDisplayName");
-        }
-
         //private void OnAnimationGroupStateChanged(ModuleAnimationGroup data0, bool data1)
         //{
         //    Log("OnAnimationGroupStateChanged: " + data0 + " " + data1);
@@ -75,6 +70,10 @@ namespace CommNetAntennasInfo
             Events["Activate"].guiActive = false;
             Events["Shutdown"].guiActive = false;
 
+            Actions["ToggleAction"].active = false;
+            Actions["ActivateAction"].active = false;
+            Actions["ShutdownAction"].active = false;
+
             //CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             //commNetParams.rangeModifier  
 
@@ -83,6 +82,10 @@ namespace CommNetAntennasInfo
         }
 
 
+        public override string GetModuleDisplayName()
+        {
+            return Localizer.Format("#CAE_ModuleGeneratorAntennaDisplayName");
+        }
         public override string GetInfo()
         {
             //Log("ModuleGeneratorAntenna GetInfo");

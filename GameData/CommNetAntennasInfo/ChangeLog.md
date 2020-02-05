@@ -1,5 +1,8 @@
 ChangeLog:
 
+## Version 2.3.4
+ * Hide actions for CommNetAntennasConsumptor
+
 ## Version 2.3.3
  * Fix nulrefs
 
