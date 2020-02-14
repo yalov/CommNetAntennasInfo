@@ -1,5 +1,11 @@
 ChangeLog:
 
+## Version 2.4.0
+ * ksp 1.9.0
+ * CommNetAntennasConsumptor:
+     * disabled consumption for the INTERNAL antennas
+     * DIRECT consumption reduced by 2.5 times.
+
 ## Version 2.3.4
  * Hide actions for CommNetAntennasConsumptor
 
