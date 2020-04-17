@@ -34,7 +34,7 @@ namespace CommNetAntennasInfo
             for (int i = 0; i < TrackingLevels; i++)
             {
                 double dsnPower = GameVariables.Instance.GetDSNRange(TrackingStationFloats[i]);
-                DSNPowerModified[i] = dsnPower * commNetParams.DSNModifier;
+                DSNPowerModified[i] = dsnPower /* * commNetParams.DSNModifier*/;
                 DSNPowerModified_str[i] = Formatter.ValueExtraShortSpaced(DSNPowerModified[i]);
             }
 

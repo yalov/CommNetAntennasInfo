@@ -1,5 +1,9 @@
 ChangeLog:
 
+## Version 2.4.1
+ * Packet size and cost to PAW 
+ * fix DSN power info
+
 ## Version 2.4.0
  * ksp 1.9.0
  * CommNetAntennasConsumptor:

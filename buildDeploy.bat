@@ -6,7 +6,7 @@ rem v2
 rem instruction in the BUILDRELEASE.BAT
 
 rem Set variables here
-set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.9.0
+set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.9.1
 set MODNAME=CommNetAntennasInfo
 set EXTRAS=Extras-Consumptor
 

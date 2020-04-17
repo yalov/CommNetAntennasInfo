@@ -23,8 +23,13 @@ namespace CommNetAntennasInfo
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true)]
         string CombinabilityExponentStr;
 
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true)]
+        string PacketStr;
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
         string DataResourceCostStr;
+
+        
 
         ModuleDeployableAntenna moduleDA;
         ModuleDataTransmitter moduleDT;
@@ -95,7 +100,9 @@ namespace CommNetAntennasInfo
             AntennaRatingStr = Formatter.ValueShort(antennaPowerModified);
             AntennaTypeStr = Formatter.ToTitleCase(moduleDT.antennaType.displayDescription());
             DataResourceCostStr = Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.##"));
-
+            PacketStr = Localizer.Format("#CAE_Mit", moduleDT.packetSize.ToString("#.#")) + " & " +
+            Localizer.Format("#CAE_EC", moduleDT.packetResourceCost.ToString("#.##")); 
+            
             if (moduleDT.antennaCombinable)
             {
                 AntennaRatingStr += " " + Localizer.Format("#autoLOC_236248");
