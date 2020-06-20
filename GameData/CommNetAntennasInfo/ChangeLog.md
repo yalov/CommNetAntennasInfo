@@ -1,5 +1,10 @@
 ChangeLog:
 
+## Version 2.5.0
+ * ksp 1.8-1.9
+ * support Antennas built-in DMMagic Soil Moisture Sensor and SIGINT
+ * add ModuleAntennaToggler - feature to disable every `static` (unretractable) antennas
+
 ## Version 2.3.5
  * backport 2.4.1 to ksp 1.8
 

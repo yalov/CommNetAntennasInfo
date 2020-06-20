@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="CommNetAntennasInfo.cs" />
     <Compile Include="ModuleAntennaInfo.cs" />
+    <Compile Include="ModuleAntennaToggler.cs" />
     <Compile Include="ModuleGeneratorAntenna.cs" />
     <Compile Include="CustomBurmKit.cs" />
     <Compile Include="Formatter.cs" />
