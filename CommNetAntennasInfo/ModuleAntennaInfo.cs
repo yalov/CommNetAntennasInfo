@@ -26,8 +26,15 @@ namespace CommNetAntennasInfo
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true)]
         string PacketStr;
 
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true)]
+        string BandwidthStr;
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
         string DataResourceCostStr;
+
+
+
+        
 
         
 
@@ -100,6 +107,8 @@ namespace CommNetAntennasInfo
             AntennaRatingStr = Formatter.ValueShort(antennaPowerModified);
             AntennaTypeStr = Formatter.ToTitleCase(moduleDT.antennaType.displayDescription());
             DataResourceCostStr = Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.##"));
+            BandwidthStr = Localizer.Format("#CAE_EC_S", (moduleDT.packetSize / moduleDT.packetInterval).ToString("#.##"));   
+
             PacketStr = Localizer.Format("#CAE_Mit", moduleDT.packetSize.ToString("#.#")) + " & " +
             Localizer.Format("#CAE_EC", moduleDT.packetResourceCost.ToString("#.##")); 
             

@@ -102,17 +102,13 @@ namespace CommNetAntennasInfo
                                     + Localizer.Format("#CAE_Spaces") + DSNranges_str[i]
                                 + SmartAlphaChannel(i, false) + "\n";
 
-                        modinfo.info += Localizer.Format("#autoLOC_236840"/*\n<b>Packet size: </b><<1>> Mits\n*/, moduleDT.packetSize.ToString("F1"))
+                        modinfo.info += Localizer.Format("#autoLOC_236840"/*\n<b>Packet size: </b><<1>> Mits\n*/, moduleDT.packetSize.ToString("F1")).TrimEnd()
+                                               + " & " + Localizer.Format("#CAE_EC", moduleDT.packetResourceCost.ToString("#.##")) + "\n"
                             + Localizer.Format("#autoLOC_236841"/*<b>Bandwidth: </b><<1>> Mits/sec\n*/, (moduleDT.packetSize / moduleDT.packetInterval).ToString("F2"))
 
                             + "\n"+Localizer.Format("#autoLOC_236842"/*\n\nWhen Transmitting:*/).Trim()
-                            //+ Localizer.Format("#CAE_NOB", Localizer.Format("#autoLOC_244332"))
-                            //+ Localizer.Format("#autoLOC_244197", Localizer.Format("#autoLOC_501004"/*Electric Charge*/),
-                            //(moduleDT.packetResourceCost / moduleDT.packetInterval).ToString("F1"))
-                            //+ Localizer.Format("#CAE_Thriftiness", moduleDT.DataResourceCost.ToString("#.##")) 
-                            
                             + Localizer.Format("#CAE_Consumption",
-                            Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.#")))
+                                    Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.#")))
                             ;
 
 

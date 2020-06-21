@@ -12,8 +12,8 @@ namespace CommNetAntennasInfo
         [KSPField(isPersistant = true)]
         public bool AntennaEnabled = true;
 
-        [KSPField(guiName = "Status", guiActive = true, guiActiveEditor = true)]
-        public string Status = "Enabled";
+        [KSPField(guiName = "#autoLOC_6001352" /*Status*/, guiActive = true, guiActiveEditor = true)]
+        public string statusText = Localizer.Format("#autoLOC_6001072"); //"Enabled";
 
         private float scalar;
 
@@ -22,7 +22,7 @@ namespace CommNetAntennasInfo
             SetScalar(AntennaEnabled ? 1f : 0f);
         }
 
-        [KSPEvent(guiName = "Disable Antenna", guiActive = true, guiActiveEditor = true, active = true)]
+        [KSPEvent(guiName = "#CAE_PAW_DisableAntenna", guiActive = true, guiActiveEditor = true, active = true)]
         public void ToggleAntenna()
         {
             AntennaEnabled = !AntennaEnabled;
@@ -32,8 +32,8 @@ namespace CommNetAntennasInfo
 
         private void updatePAWText()
         {
-            Events["ToggleAntenna"].guiName = AntennaEnabled ? "Disable Antenna" : "Enable Antenna";
-            Status = AntennaEnabled ? "Enabled" : "Disabled";
+            Events["ToggleAntenna"].guiName = AntennaEnabled ? Localizer.Format("#CAE_PAW_DisableAntenna") : Localizer.Format("#CAE_PAW_EnableAntenna");
+            statusText = AntennaEnabled ? Localizer.Format("#autoLOC_6001072")/*Enabled*/ : Localizer.Format("#autoLOC_6001071")/*Disabled*/;
         }
 
         // -------IScalarModule-----------
