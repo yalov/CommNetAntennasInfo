@@ -2,8 +2,11 @@ ChangeLog:
 
 ## Version 2.5.0
  * ksp 1.8-1.9
- * support Antennas built-in DMMagic Soil Moisture Sensor and SIGINT
- * add ModuleAntennaToggler - feature to disable every `static` (unretractable) antennas
+ * CommNetAntennasConsumptor:
+     * supported DMagic Orbiral Science: Soil Moisture Sensor and SIGINT
+     * added ModuleAntennaToggler - module to disable/enable every "static" (unretractable) antenna. 
+       So now you can disable static antennas, making them isn't consuming EC, and vessel loses their antenna power.
+     * added Bandwidth field to PAW
 
 ## Version 2.3.5
  * backport 2.4.1 to ksp 1.8
