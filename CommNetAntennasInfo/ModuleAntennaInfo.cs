@@ -33,11 +33,6 @@ namespace CommNetAntennasInfo
         string DataResourceCostStr;
 
 
-
-        
-
-        
-
         ModuleDeployableAntenna moduleDA;
         ModuleDataTransmitter moduleDT;
 
@@ -50,8 +45,6 @@ namespace CommNetAntennasInfo
                 AntennaStateStr = moduleDT.statusText;
 
         }
-
-
 
         public void Start()
         {
@@ -107,7 +100,7 @@ namespace CommNetAntennasInfo
             AntennaRatingStr = Formatter.ValueShort(antennaPowerModified);
             AntennaTypeStr = Formatter.ToTitleCase(moduleDT.antennaType.displayDescription());
             DataResourceCostStr = Localizer.Format("#CAE_EC_Mit", moduleDT.DataResourceCost.ToString("#.##"));
-            BandwidthStr = Localizer.Format("#CAE_EC_S", (moduleDT.packetSize / moduleDT.packetInterval).ToString("#.##"));   
+            BandwidthStr = Localizer.Format("#CAE_Mit_S", (moduleDT.packetSize / moduleDT.packetInterval).ToString("#.##"));   
 
             PacketStr = Localizer.Format("#CAE_Mit", moduleDT.packetSize.ToString("#.#")) + " & " +
             Localizer.Format("#CAE_EC", moduleDT.packetResourceCost.ToString("#.##")); 
@@ -144,7 +137,5 @@ namespace CommNetAntennasInfo
                 }
             }
         }
-
-
     }
 }

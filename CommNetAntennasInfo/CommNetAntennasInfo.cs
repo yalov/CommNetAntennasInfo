@@ -41,8 +41,6 @@ namespace CommNetAntennasInfo
             List<AvailablePart> partsDT = PartLoader.LoadedPartsList.Where
                     (p => p.partPrefab.Modules.OfType<ModuleDataTransmitter>().Any()).ToList();
 
-            //Log("partsDT.count: " + partsDT.Count);
-
             double BuiltInPowerModified = GetPowerMostCommonInternalAntenna(partsDT) * commNetParams.rangeModifier;
             string BuiltInPowerModified_str = Formatter.ValueExtraShortSpaced(BuiltInPowerModified);
             

@@ -1,12 +1,17 @@
 ChangeLog:
 
+## Version 3.0.0
+ * The Extras/Consumptor is excluded to the separate CommNet Antennas Consumptor repo
+
 ## Version 2.5.0
  * ksp 1.8-1.9
  * CommNetAntennasConsumptor:
-     * supported DMagic Orbiral Science: Soil Moisture Sensor and SIGINT
-     * added ModuleAntennaToggler - module to disable/enable every "static" (unretractable) antenna. 
-       So now you can disable static antennas, making them isn't consuming EC, and vessel loses their antenna power.
-     * added Bandwidth field to PAW
+    * supported DMagic Orbiral Science: Soil Moisture Sensor and SIGINT
+    * added ModuleAntennaToggler - module to disable/enable every "static" (unretractable) antenna. 
+      So now you can disable static antennas, and they will stop consuming EC, but a vessel will lose its antenna power.
+      Also if you disable antenna at launch, it will be auto-enabled on transmission request and later auto-disabled
+      (same as retractable antennas auto-deployed and auto-retracted)
+ * added Bandwidth field to PAW
 
 ## Version 2.3.5
  * backport 2.4.1 to ksp 1.8
