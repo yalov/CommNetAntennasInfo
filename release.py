@@ -6,7 +6,7 @@ make sure, that ssh is set up
     copy private key to ~/.ssh/
 
 Public domain license.
-author: flart, version: 14
+author: flart, version: 15
 https://github.com/yalov/SpeedUnitAnnex/blob/master/release.py
 
 Script loads release-arhive to github and spacedock
@@ -60,13 +60,17 @@ def archive_to(file):
                   len(zipf.infolist()), os.path.getsize(file)))
 
 
-def get_version(version_file, obj="VERSION"):
+def get_version(version_file, obj="VERSION", ignore_patch = False):
     """ get version from the version_file """
     data = json.load(open(version_file))
     if obj not in data:
         return "NO"
     ver = data[obj]
+    if ignore_patch:
+        return "{}.{}".format(ver["MAJOR"], ver["MINOR"])
+
     version = "{}.{}.{}".format(ver["MAJOR"], ver["MINOR"], ver["PATCH"])
+
     if "BUILD" in ver and ver["BUILD"] != 0:
         version += '.' + str(ver["BUILD"])
     return version
@@ -233,8 +237,13 @@ if __name__ == '__main__':
     if KSP_VER not in all_versions:
         print("KSP {} is not supported by Spacedock,\nlast supported version is KSP {}"
               .format(KSP_VER, all_versions[0]))
-        input("Press Enter to exit")
-        sys.exit(-1)
+        print("trying to ignore the patch... ")
+        KSP_VER = get_version(VERSIONFILE, "KSP_VERSION", True)
+        if KSP_VER not in all_versions:
+            print("KSP {} is not supported by Spacedock,\nlast supported version is KSP {}"
+                .format(KSP_VER, all_versions[0]))
+            input("Press Enter to exit")
+            sys.exit(-1)
 
     print("KSP {} is supported by Spacedock.".format(KSP_VER))
 
