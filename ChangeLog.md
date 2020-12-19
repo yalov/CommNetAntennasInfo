@@ -1,5 +1,9 @@
 ## ChangeLog:
 
+### Version 3.0.3
+ * ksp 1.11
+ * fields grouped in the PAW
+
 ### Version 3.0.2
  * updated French translation (github.com/vinix38)
 

@@ -9,27 +9,35 @@ namespace CommNetAntennasInfo
 {
     public class ModuleAntennaInfo : PartModule
     {
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001352")]
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001352", 
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string StatusStr;
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001428")]
+        [KSPField(guiActive = true, guiActiveEditor = false, guiName = "#autoLOC_6001428",
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string AntennaStateStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type",
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string AntennaTypeStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429", 
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string AntennaRatingStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string CombinabilityExponentStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string PacketStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string BandwidthStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         string DataResourceCostStr;
 
 
@@ -84,13 +92,12 @@ namespace CommNetAntennasInfo
             {
                 moduleDA = MDAs[0];
                 moduleDA.Fields["status"].guiActive = false;
-                moduleDA.Fields["status"].guiActiveEditor = false;
+                
                 Fields["StatusStr"].guiActive = true;
                 Fields["StatusStr"].guiActiveEditor = true;
             }
 
             moduleDT.Fields["statusText"].guiActive = false;
-            moduleDT.Fields["statusText"].guiActiveEditor = false;
 
             moduleDT.Fields["powerText"].guiActive = false;
             moduleDT.Fields["powerText"].guiActiveEditor = false;
@@ -118,18 +125,9 @@ namespace CommNetAntennasInfo
 
             if (moduleDT.antennaType == AntennaType.INTERNAL)
             {
-                moduleDT.Fields["statusText"].guiActive = false; 
-
-                AntennaTypeStr += string.Format(" ({0}: {1}", Localizer.Format("#CAE_PAW_Rating_Short"), AntennaRatingStr);
-
-                if (moduleDT.antennaCombinable)
-                    AntennaTypeStr += string.Format(", {0}: {1}", Localizer.Format("#CAE_PAW_Combinab_Exponent_Short"), moduleDT.antennaCombinableExponent.ToString());
-
-                AntennaTypeStr += ")";
-
                 foreach (var f in Fields)
                 {
-                    if (f.name != "AntennaTypeStr")
+                    if (f.name != "AntennaTypeStr" && f.name != "AntennaRatingStr")
                     {
                         f.guiActive = false;
                         f.guiActiveEditor = false;
