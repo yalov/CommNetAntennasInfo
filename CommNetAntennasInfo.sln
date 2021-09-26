@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommNetAntennasInfo.version = CommNetAntennasInfo.version
 		GameData\CommNetAntennasInfo\Configs\ModuleAntennaInfo.cfg = GameData\CommNetAntennasInfo\Configs\ModuleAntennaInfo.cfg
 		README.md = README.md
+		release.py = release.py
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localization", "{2CACE644-FDB7-4779-A7CB-EACABF02CEC0}"

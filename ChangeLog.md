@@ -1,5 +1,9 @@
 ## ChangeLog:
 
+### Version 3.1.0
+* add Vessel Antenna Power (a button in the PAW of Internal Antenna in the Editor and Flight) 
+* Remove code in the Update()
+
 ### Version 3.0.3
  * ksp 1.11
  * fields grouped in the PAW
