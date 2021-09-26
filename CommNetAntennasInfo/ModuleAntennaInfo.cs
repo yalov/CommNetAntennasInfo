@@ -1,5 +1,4 @@
-﻿
-using KSP.Localization;
+﻿using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +36,7 @@ namespace CommNetAntennasInfo
             groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         protected string VesselRatingStr;
 
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_Relays", 
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001722", 
             groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         protected string VesselRelayRatingStr;
 

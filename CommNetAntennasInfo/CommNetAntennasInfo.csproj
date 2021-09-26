@@ -33,7 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CommNetAntennasInfo.cs" />
+    <Compile Include="EditorAddon.cs" />
     <Compile Include="ModuleAntennaInfo.cs" />
     <Compile Include="CustomBurmKit.cs" />
     <Compile Include="Formatter.cs" />

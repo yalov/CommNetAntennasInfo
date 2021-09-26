@@ -8,7 +8,7 @@ using static CommNetAntennasInfo.Logging;
 namespace CommNetAntennasInfo
 {
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
-    public class SituationModule : MonoBehaviour
+    public class EditorAddon : MonoBehaviour
     {
         CommNet.CommNetParams commNetParams;
         int CurrentTrackingStationIndex;
