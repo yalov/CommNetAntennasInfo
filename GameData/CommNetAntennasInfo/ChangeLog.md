@@ -5,6 +5,7 @@
     * a button in the PAW of Internal Antenna (probes, pods) in the Editor and Flight 
     * support NF:Exploration
 * optimization
+* MM 4.2.1
 
 ### Version 3.0.3
  * ksp 1.11
