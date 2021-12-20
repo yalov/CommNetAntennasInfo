@@ -58,6 +58,18 @@ namespace CommNetAntennasInfo
             else return value.ToString("0e0") + SI[0];
         }
 
+        public static string ValueShort(double value, int number_of_decimal_digits)
+        {
+            double v = Math.Abs(value);
+
+            int i;
+            for (i = 0; v >= 1000 && i < SI.Length - 1; i++)
+                v /= 1000;
+
+            if (v < 1000) return Math.Round(Math.Sign(value) * v, number_of_decimal_digits).ToString("F" + number_of_decimal_digits) + SI[i];
+            else return value.ToString("0.e0") + SI[0];
+        }
+
         public static string ValueExtraShort(double value)
         {
             double v = Math.Abs(value);

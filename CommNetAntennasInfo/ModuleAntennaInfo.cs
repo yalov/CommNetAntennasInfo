@@ -1,5 +1,4 @@
-﻿
-using KSP.Localization;
+﻿using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,42 +8,116 @@ namespace CommNetAntennasInfo
 {
     public class ModuleAntennaInfo : PartModule
     {
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001352")]
-        string StatusStr;
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001428")]
-        string AntennaStateStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type",
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string AntennaTypeStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type")]
-        string AntennaTypeStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429", 
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string AntennaRatingStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429")]
-        string AntennaRatingStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string CombinabilityExponentStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true)]
-        string CombinabilityExponentStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string PacketStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true)]
-        string PacketStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string BandwidthStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true)]
-        string BandwidthStr;
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true,
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string DataResourceCostStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
-        string DataResourceCostStr;
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_Antennas",
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string VesselRatingStr;
 
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001722", 
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected string VesselRelayRatingStr;
 
-        ModuleDeployableAntenna moduleDA;
-        ModuleDataTransmitter moduleDT;
-
-        void LateUpdate()
+        [KSPEvent(guiActive = true, guiActiveEditor = true, active = false, guiName = "#CAE_PAW_Show_VR",
+            groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
+        protected void VesselRatingUpdate()
         {
-            if (moduleDA)
-                StatusStr = moduleDA.status;
+            Fields["VesselRatingStr"].guiActive = true;
+            Fields["VesselRatingStr"].guiActiveEditor = true;
+            Fields["VesselRelayRatingStr"].guiActive = true;
+            Fields["VesselRelayRatingStr"].guiActiveEditor = true;
 
-            if (moduleDT)
-                AntennaStateStr = moduleDT.statusText;
+            List<ModuleDataTransmitter> DTs;
+            if (HighLogic.LoadedScene == GameScenes.EDITOR || HighLogic.LoadedScene == GameScenes.FLIGHT)
+            {
+                if (HighLogic.LoadedScene == GameScenes.EDITOR)
+                {
+                    DTs = EditorLogic.fetch.ship.parts.SelectMany(p => p.Modules.OfType<ModuleDataTransmitter>()).ToList();
+                }
+                else //if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                {
+                    DTs = vessel.FindPartModulesImplementing<ModuleDataTransmitter>();
+                }
 
+                VesselRating(DTs, out string all_value, out string relay_value);
+
+                //Fields["VesselRatingStr"].guiName = all_name;
+                //Fields["VesselRelayRatingStr"].guiName = relay_name;
+                VesselRatingStr = all_value;
+                VesselRelayRatingStr = relay_value;
+
+                Events["VesselRatingUpdate"].guiName = Localizer.Format("#CAE_PAW_Update_VR");
+            }
         }
+
+        public static double AntennaSum(ICollection<ModuleDataTransmitter> list)
+        {
+            var strongestAntenna = 0d;
+            var sum = 0d;
+            var weighedSum = 0d;
+            
+            foreach (var a in list)
+            {
+                if (a.CommPower > strongestAntenna)
+                    strongestAntenna = a.CommPower;
+
+                sum += a.CommPower;
+
+                double exp;
+                if (a.CommType == AntennaType.INTERNAL) 
+                    exp = 0;
+                else
+                    exp = a.CommCombinableExponent;
+
+                weighedSum += a.CommPower * exp;
+            }
+
+            var averageExp = weighedSum / sum;
+            var result = strongestAntenna * Math.Pow(sum / strongestAntenna, averageExp);
+
+            //Log("{0}, {1}, {2} {3}", strongestAntenna, sum, averageExp, result);
+
+            return result;
+        }
+
+        public static void VesselRating(ICollection<ModuleDataTransmitter> DTs, 
+            out string all_value, out string relay_value)
+        {
+            double power = AntennaSum(DTs);
+            all_value = Localizer.Format("#CAE_PAW_Rating", DTs.Count, Formatter.ValueShort(power, 2));
+
+            var Relays = DTs.Where(z => z.CommType == AntennaType.RELAY).ToList();
+            relay_value = Localizer.Format("#CAE_PAW_Rating", Relays.Count, 0);
+
+            if (Relays.Count != 0)
+            {
+                double powerRelay = AntennaSum(Relays);
+                relay_value = Localizer.Format("#CAE_PAW_Rating", Relays.Count, Formatter.ValueShort(powerRelay, 2));
+            }
+        }
+
 
         public void Start()
         {
@@ -71,7 +144,7 @@ namespace CommNetAntennasInfo
                 return;
             }
 
-            moduleDT = MDTs[0];
+            var moduleDT = MDTs[0];
 
             //ModuleDeployableAntenna
             // status | Status | Retracted Retracting.. Extended Extending..
@@ -82,15 +155,15 @@ namespace CommNetAntennasInfo
 
             if (MDAs.Count == 1)
             {
-                moduleDA = MDAs[0];
-                moduleDA.Fields["status"].guiActive = false;
-                moduleDA.Fields["status"].guiActiveEditor = false;
-                Fields["StatusStr"].guiActive = true;
-                Fields["StatusStr"].guiActiveEditor = true;
+                var moduleDA = MDAs[0];
+                moduleDA.Fields["status"].group.name = "CommNetA";
+                moduleDA.Fields["status"].group.displayName = "#CommNetA_Name";
+                moduleDA.Fields["status"].guiActiveEditor = true;
             }
 
-            moduleDT.Fields["statusText"].guiActive = false;
-            moduleDT.Fields["statusText"].guiActiveEditor = false;
+            moduleDT.Fields["statusText"].group.name = "CommNetA";
+            moduleDT.Fields["statusText"].group.displayName = "#CommNetA_Name";
+            //moduleDT.Fields["statusText"].guiActiveEditor = true;
 
             moduleDT.Fields["powerText"].guiActive = false;
             moduleDT.Fields["powerText"].guiActiveEditor = false;
@@ -118,18 +191,11 @@ namespace CommNetAntennasInfo
 
             if (moduleDT.antennaType == AntennaType.INTERNAL)
             {
-                moduleDT.Fields["statusText"].guiActive = false; 
-
-                AntennaTypeStr += string.Format(" ({0}: {1}", Localizer.Format("#CAE_PAW_Rating_Short"), AntennaRatingStr);
-
-                if (moduleDT.antennaCombinable)
-                    AntennaTypeStr += string.Format(", {0}: {1}", Localizer.Format("#CAE_PAW_Combinab_Exponent_Short"), moduleDT.antennaCombinableExponent.ToString());
-
-                AntennaTypeStr += ")";
+                Events["VesselRatingUpdate"].active = true;
 
                 foreach (var f in Fields)
                 {
-                    if (f.name != "AntennaTypeStr")
+                    if (f.name != "AntennaTypeStr" && f.name != "AntennaRatingStr")
                     {
                         f.guiActive = false;
                         f.guiActiveEditor = false;

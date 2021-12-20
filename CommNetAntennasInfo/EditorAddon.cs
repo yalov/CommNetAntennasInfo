@@ -5,15 +5,16 @@ using KSP.Localization;
 using System.Linq;
 using static CommNetAntennasInfo.Logging;
 
-
 namespace CommNetAntennasInfo
 {
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
-    public class SituationModule : MonoBehaviour
+    public class EditorAddon : MonoBehaviour
     {
+        CommNet.CommNetParams commNetParams;
+        int CurrentTrackingStationIndex;
+
         private void Start()
         {
-            
             commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             int TrackingLevels = 3;
 
@@ -47,15 +48,12 @@ namespace CommNetAntennasInfo
             foreach (AvailablePart part in partsDT)
             {
                 List<ModuleDataTransmitter> modules = part.partPrefab.Modules.OfType<ModuleDataTransmitter>().ToList();
-                //Log("modules.count: " + modules.Count);
+
+
                 if (modules.Count == 0) continue;
 
-                //foreach (var i in part.moduleInfos)
-                    //Log(i.moduleName + " " + modules[0].GUIName);
-                    
-                
                 var modinfos = part.moduleInfos.Where(i => modules[0].GUIName.Contains(i.moduleName)).ToList();
-                //Log("modinfos.count: " + modinfos.Count);
+               
                 if (modules.Count != modinfos.Count) continue;
 
                 for (int index= 0; index < modules.Count ; index++)
@@ -86,8 +84,6 @@ namespace CommNetAntennasInfo
                                 
                             : Localizer.Format("#CAE_Not_Combinable"))
                             + Localizer.Format("#CAE_Title_vs");
-                           
-                            
 
                         if (moduleDT.CommType == AntennaType.RELAY)
                             modinfo.info += BuiltInPowerModified_str + Localizer.Format("#CAE_Built_In") 
@@ -142,7 +138,7 @@ namespace CommNetAntennasInfo
                 }
             }
         }
-
+    
         private string SmartAlphaChannel(int i, bool start = true)
         {
             if (i == CurrentTrackingStationIndex)
@@ -172,7 +168,6 @@ namespace CommNetAntennasInfo
                 return 5000;
         }
 
-        CommNet.CommNetParams commNetParams;
-        int CurrentTrackingStationIndex;
+
     }
 }

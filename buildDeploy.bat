@@ -6,9 +6,8 @@ rem v2
 rem instruction in the BUILDRELEASE.BAT
 
 rem Set variables here
-set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.10.0
+set GAMEPATH=c:\Users\User\Games\Kerbal Space Program 1.12.2
 set MODNAME=CommNetAntennasInfo
-set EXTRAS=Extras-Consumptor
 
 REM copying dll and .version to Repository/GameData
 REM /Y	Suppresses prompting to confirm that you want to overwrite an existing destination file.
@@ -22,4 +21,3 @@ REM mkdir "%GAMEPATH%\GameData\%MODNAME%"
 REM /S	recursive copuing un-empty directories
 
 xcopy "GameData\%MODNAME%" "%GAMEPATH%\GameData\%MODNAME%\" /Y /I /Q /S
-xcopy "GameData\%EXTRAS%\%MODNAME%" "%GAMEPATH%\GameData\%MODNAME%\" /Y /I /Q /S

@@ -1,8 +1,22 @@
 ## ChangeLog:
 
+### Version 3.1.0
+* add Vessel Antenna Power
+    * a button in the PAW of Internal Antenna (probes, pods) in the Editor and Flight 
+    * support NF:Exploration
+* optimization
+* MM 4.2.1
+
+### Version 3.0.3
+ * ksp 1.11
+ * fields grouped in the PAW
+
+### Version 3.0.2
+ * updated French translation (github.com/vinix38)
+
 ### Version 3.0.1
  * ksp 1.8-1.10
- * added french translation (github.com/vinix38)
+ * added French translation (github.com/vinix38)
 
 ### Version 3.0.0
  * The Extras/Consumptor is excluded to the separate CommNet Antennas Consumptor repo
