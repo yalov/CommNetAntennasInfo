@@ -40,6 +40,14 @@ namespace CommNetAntennasInfo
             groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         protected string VesselRelayRatingStr;
 
+        [KSPField(guiActive = false, guiActiveEditor = false,
+            guiName = "OtherVesselRating", groupName = "CommNetA", groupStartCollapsed = true, 
+            guiUnits = "G"),
+            UI_FloatRange(minValue = 0f, maxValue = 1000f, stepIncrement = 0.001f)
+            ]
+        public float OtherVesselRating = 0.001f;
+
+
         [KSPEvent(guiActive = true, guiActiveEditor = true, active = false, guiName = "#CAE_PAW_Show_VR",
             groupName = "CommNetA", groupDisplayName = "#CommNetA_Name", groupStartCollapsed = true)]
         protected void VesselRatingUpdate()
@@ -48,6 +56,9 @@ namespace CommNetAntennasInfo
             Fields["VesselRatingStr"].guiActiveEditor = true;
             Fields["VesselRelayRatingStr"].guiActive = true;
             Fields["VesselRelayRatingStr"].guiActiveEditor = true;
+
+            Fields["OtherVesselRating"].guiActive = true;
+            Fields["OtherVesselRating"].guiActiveEditor = true;
 
             List<ModuleDataTransmitter> DTs;
             if (HighLogic.LoadedScene == GameScenes.EDITOR || HighLogic.LoadedScene == GameScenes.FLIGHT)
@@ -63,8 +74,6 @@ namespace CommNetAntennasInfo
 
                 VesselRating(DTs, out string all_value, out string relay_value);
 
-                //Fields["VesselRatingStr"].guiName = all_name;
-                //Fields["VesselRelayRatingStr"].guiName = relay_name;
                 VesselRatingStr = all_value;
                 VesselRelayRatingStr = relay_value;
 
@@ -102,11 +111,14 @@ namespace CommNetAntennasInfo
             return result;
         }
 
-        public static void VesselRating(ICollection<ModuleDataTransmitter> DTs, 
+        public void VesselRating(ICollection<ModuleDataTransmitter> DTs, 
             out string all_value, out string relay_value)
         {
             double power = AntennaSum(DTs);
             all_value = Localizer.Format("#CAE_PAW_Rating", DTs.Count, Formatter.ValueShort(power, 2));
+
+            double distance = Math.Pow(power * OtherVesselRating * 1e9, 0.5);
+            all_value += ", " + Formatter.DistanceShort(distance);
 
             var Relays = DTs.Where(z => z.CommType == AntennaType.RELAY).ToList();
             relay_value = Localizer.Format("#CAE_PAW_Rating", Relays.Count, 0);
@@ -115,15 +127,20 @@ namespace CommNetAntennasInfo
             {
                 double powerRelay = AntennaSum(Relays);
                 relay_value = Localizer.Format("#CAE_PAW_Rating", Relays.Count, Formatter.ValueShort(powerRelay, 2));
+                relay_value += ", " + Formatter.DistanceShort(Math.Pow(powerRelay * OtherVesselRating * 1e9, 0.5));
             }
         }
-
 
         public void Start()
         {
             CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             List<ModuleDataTransmitter> MDTs = part.Modules.OfType<ModuleDataTransmitter>().ToList();
             List<ModuleDeployableAntenna> MDAs = part.Modules.OfType<ModuleDeployableAntenna>().ToList();
+
+            var dsnpower = GameVariables.Instance.GetDSNRange(
+                ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
+
+            OtherVesselRating = (float)(dsnpower / 1e9);
 
             if (MDTs.Count != 1)
             {
@@ -161,10 +178,19 @@ namespace CommNetAntennasInfo
                 moduleDA.Fields["status"].guiActiveEditor = true;
             }
 
+            List<ModuleCommand> MCs = part.Modules.OfType<ModuleCommand>().ToList();
+
+            if (MCs.Count == 1)
+            {
+                MCs[0].Fields["commNetSignal"].group.name = "CommNetA";
+                MCs[0].Fields["commNetSignal"].group.displayName = "#CommNetA_Name";
+
+                MCs[0].Fields["commNetFirstHopDistance"].group.name = "CommNetA";
+                MCs[0].Fields["commNetFirstHopDistance"].group.displayName = "#CommNetA_Name";
+            }
+
             moduleDT.Fields["statusText"].group.name = "CommNetA";
             moduleDT.Fields["statusText"].group.displayName = "#CommNetA_Name";
-            //moduleDT.Fields["statusText"].guiActiveEditor = true;
-
             moduleDT.Fields["powerText"].guiActive = false;
             moduleDT.Fields["powerText"].guiActiveEditor = false;
 
