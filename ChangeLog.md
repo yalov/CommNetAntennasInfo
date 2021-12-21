@@ -1,5 +1,8 @@
 ## ChangeLog:
 
+### Version 3.1.1
+ * updated French translation (github.com/vinix38)
+
 ### Version 3.1.0
 * add Vessel Antenna Power
     * a button in the PAW of Internal Antenna (probes, pods) in the Editor and Flight 
