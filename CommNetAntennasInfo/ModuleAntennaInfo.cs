@@ -36,7 +36,7 @@ namespace CommNetAntennasInfo
         [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_OtherVesselRating",
             groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true,
             guiUnits = "G"),
-            UI_FloatRange(minValue = 0f, maxValue = 1000f, stepIncrement = 0.001f)
+            UI_FloatRange(minValue = 0f, maxValue = 10000f, stepIncrement = 0.001f)
             ]
         public float OtherVesselRating = 0.001f;
 
