@@ -20,9 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localizatio
 	ProjectSection(SolutionItems) = preProject
 		GameData\CommNetAntennasInfo\localization\en-us.cfg = GameData\CommNetAntennasInfo\localization\en-us.cfg
 		GameData\CommNetAntennasInfo\localization\fr-fr.cfg = GameData\CommNetAntennasInfo\localization\fr-fr.cfg
-		GameData\CommNetAntennasInfo\localization\ja.cfg = GameData\CommNetAntennasInfo\localization\ja.cfg
 		GameData\CommNetAntennasInfo\localization\ru.cfg = GameData\CommNetAntennasInfo\localization\ru.cfg
-		GameData\CommNetAntennasInfo\localization\zh-cn.cfg = GameData\CommNetAntennasInfo\localization\zh-cn.cfg
 	EndProjectSection
 EndProject
 Global
