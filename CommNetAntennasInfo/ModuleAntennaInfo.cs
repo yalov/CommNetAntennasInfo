@@ -127,13 +127,17 @@ namespace CommNetAntennasInfo
         public void Start()
         {
             BasePAWGroup CommunicationGroup = new BasePAWGroup("CF_Comms", "#CAE_PAW_Group_Name", true);
-
-            foreach (var field in Fields)
-                field.group = CommunicationGroup;
-
-            foreach (var ev in Events)
-                ev.group = CommunicationGroup;
-
+            
+            Fields[nameof(AntennaTypeStr)].group = CommunicationGroup;
+            Fields[nameof(AntennaRatingStr)].group = CommunicationGroup;
+            Fields[nameof(CombinabilityExponentStr)].group = CommunicationGroup;
+            Fields[nameof(PacketStr)].group = CommunicationGroup;
+            Fields[nameof(BandwidthStr)].group = CommunicationGroup;
+            Fields[nameof(DataResourceCostStr)].group = CommunicationGroup;
+            Fields[nameof(OtherVesselRating)].group = CommunicationGroup;
+            Fields[nameof(VesselRatingStr)].group = CommunicationGroup;
+            Fields[nameof(VesselRelayRatingStr)].group = CommunicationGroup;
+            Events[nameof(VesselRatingUpdate)].group = CommunicationGroup;
 
             CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             List<ModuleDataTransmitter> MDTs = part.Modules.OfType<ModuleDataTransmitter>().ToList();
@@ -183,7 +187,6 @@ namespace CommNetAntennasInfo
                 var moduleDA = MDAs[0];
                 moduleDA.Fields["status"].group = CommunicationGroup;
                 moduleDA.Fields["status"].guiActiveEditor = true;
-
             }
 
             //List<ModuleCommand> MCs = part.Modules.OfType<ModuleCommand>().ToList();
