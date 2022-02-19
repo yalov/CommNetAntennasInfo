@@ -1,6 +1,7 @@
 {
   "NAME": "CommNetAntennasInfo",
   "URL": "https://raw.githubusercontent.com/yalov/CommNetAntennasInfo/master/CommNetAntennasInfo.version",
+  "CHANGE_LOG_URL": "https://raw.githubusercontent.com/yalov/CommNetAntennasInfo/master/ChangeLog.md",
   "DOWNLOAD": "https://github.com/yalov/CommNetAntennasInfo/releases",
   "GITHUB": {
     "USERNAME": "yalov",
@@ -9,7 +10,7 @@
   "VERSION": {
     "MAJOR": 3,
     "MINOR": 1,
-    "PATCH": 1,
+    "PATCH": 2,
     "BUILD": 0
   },
   "KSP_VERSION": {

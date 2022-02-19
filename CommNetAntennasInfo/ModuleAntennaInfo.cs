@@ -8,51 +8,35 @@ namespace CommNetAntennasInfo
 {
     public class ModuleAntennaInfo : PartModule
     {
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type",
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Type")]
         protected string AntennaTypeStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429", 
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#autoLOC_6001429")]
         protected string AntennaRatingStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true,
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Combinability_Exponent", advancedTweakable = true)]
         protected string CombinabilityExponentStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true,
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Packet", advancedTweakable = true)]
         protected string PacketStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true,
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_Bandwidth", advancedTweakable = true)]
         protected string BandwidthStr;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true,
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "#CAE_PAW_ConsumptionTransmit", advancedTweakable = true)]
         protected string DataResourceCostStr;
 
-
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_OtherVesselRating",
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true,
-            guiUnits = "G"),
-            UI_FloatRange(minValue = 0f, maxValue = 10000f, stepIncrement = 0.001f)
-            ]
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_OtherVesselRating", guiUnits = "G"),
+            UI_FloatRange(minValue = 0f, maxValue = 10000f, stepIncrement = 0.001f)]
         public float OtherVesselRating = 0.001f;
 
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_Antennas",
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#CAE_PAW_Antennas")]
         protected string VesselRatingStr;
 
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001722", 
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "#autoLOC_6001722")]
         protected string VesselRelayRatingStr;
 
-
-
-
-        [KSPEvent(guiActive = true, guiActiveEditor = true, active = false, guiName = "#CAE_PAW_Show_VR",
-            groupName = "CommNetA", groupDisplayName = "#CAE_PAW_Group_Name", groupStartCollapsed = true)]
+        [KSPEvent(guiActive = true, guiActiveEditor = true, active = false, guiName = "#CAE_PAW_Show_VR")]
         protected void VesselRatingUpdate()
         {
             Fields["VesselRatingStr"].guiActive = true;
@@ -142,6 +126,15 @@ namespace CommNetAntennasInfo
 
         public void Start()
         {
+            BasePAWGroup CommunicationGroup = new BasePAWGroup("CF_Comms", "#CAE_PAW_Group_Name", true);
+
+            foreach (var field in Fields)
+                field.group = CommunicationGroup;
+
+            foreach (var ev in Events)
+                ev.group = CommunicationGroup;
+
+
             CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             List<ModuleDataTransmitter> MDTs = part.Modules.OfType<ModuleDataTransmitter>().ToList();
             List<ModuleDeployableAntenna> MDAs = part.Modules.OfType<ModuleDeployableAntenna>().ToList();
@@ -174,6 +167,9 @@ namespace CommNetAntennasInfo
             }
 
             var moduleDT = MDTs[0];
+            moduleDT.Fields["statusText"].group = CommunicationGroup;
+            moduleDT.Fields["powerText"].guiActive = false;
+            moduleDT.Fields["powerText"].guiActiveEditor = false;
 
             //ModuleDeployableAntenna
             // status | Status | Retracted Retracting.. Extended Extending..
@@ -185,27 +181,18 @@ namespace CommNetAntennasInfo
             if (MDAs.Count == 1)
             {
                 var moduleDA = MDAs[0];
-                moduleDA.Fields["status"].group.name = "CommNetA";
-                moduleDA.Fields["status"].group.displayName = "#CAE_PAW_Group_Name";
+                moduleDA.Fields["status"].group = CommunicationGroup;
                 moduleDA.Fields["status"].guiActiveEditor = true;
 
             }
 
-            List<ModuleCommand> MCs = part.Modules.OfType<ModuleCommand>().ToList();
-
-            if (MCs.Count == 1)
-            {
-                MCs[0].Fields["commNetSignal"].group.name = "CommNetA";
-                MCs[0].Fields["commNetSignal"].group.displayName = "#CAE_PAW_Group_Name";
-
-                MCs[0].Fields["commNetFirstHopDistance"].group.name = "CommNetA";
-                MCs[0].Fields["commNetFirstHopDistance"].group.displayName = "#CAE_PAW_Group_Name";
-            }
-
-            moduleDT.Fields["statusText"].group.name = "CommNetA";
-            moduleDT.Fields["statusText"].group.displayName = "#CAE_PAW_Group_Name";
-            moduleDT.Fields["powerText"].guiActive = false;
-            moduleDT.Fields["powerText"].guiActiveEditor = false;
+            //List<ModuleCommand> MCs = part.Modules.OfType<ModuleCommand>().ToList();
+            //
+            //if (MCs.Count == 1)
+            //{
+            //    MCs[0].Fields["commNetSignal"].group = CommNetApawGroup;
+            //    MCs[0].Fields["commNetFirstHopDistance"].group = CommNetApawGroup;
+            //}
 
             double antennaPowerModified = moduleDT.antennaPower * commNetParams.rangeModifier;
 

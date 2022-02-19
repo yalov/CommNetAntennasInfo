@@ -1,9 +1,11 @@
 ## ChangeLog:
 
+### Version 3.1.2
+ * fix KSPCommunityFixes incompatibility
+
 ### Version 3.1.1
  * add Distance in the Internal Antenna PAW 
  * updated French translation (github.com/vinix38)
-   
 
 ### Version 3.1.0
 * add Vessel Antenna Power
