@@ -1,5 +1,8 @@
 ## ChangeLog:
 
+### Version 3.1.3
+* The vessel rating in the Internal Antenna PAW accounts for the antenna strength modifier in the difficulty settings
+
 ### Version 3.1.2
  * fix KSPCommunityFixes incompatibility
 

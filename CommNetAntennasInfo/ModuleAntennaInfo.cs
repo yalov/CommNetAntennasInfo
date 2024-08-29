@@ -68,18 +68,22 @@ namespace CommNetAntennasInfo
             }
         }
 
+        static CommNet.CommNetParams commNetParams;
+
         public static double AntennaSum(ICollection<ModuleDataTransmitter> list)
         {
             var strongestAntenna = 0d;
             var sum = 0d;
             var weighedSum = 0d;
             
+
             foreach (var a in list)
             {
-                if (a.CommPower > strongestAntenna)
-                    strongestAntenna = a.CommPower;
+                double antennaPowerModified = a.antennaPower * commNetParams.rangeModifier;
+                if (antennaPowerModified > strongestAntenna)
+                    strongestAntenna = antennaPowerModified;
 
-                sum += a.CommPower;
+                sum += antennaPowerModified;
 
                 double exp;
                 if (a.CommType == AntennaType.INTERNAL) 
@@ -87,7 +91,7 @@ namespace CommNetAntennasInfo
                 else
                     exp = a.CommCombinableExponent;
 
-                weighedSum += a.CommPower * exp;
+                weighedSum += antennaPowerModified * exp;
             }
 
             var averageExp = weighedSum / sum;
@@ -139,7 +143,7 @@ namespace CommNetAntennasInfo
             Fields[nameof(VesselRelayRatingStr)].group = CommunicationGroup;
             Events[nameof(VesselRatingUpdate)].group = CommunicationGroup;
 
-            CommNet.CommNetParams commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
+            commNetParams = HighLogic.CurrentGame.Parameters.CustomParams<CommNet.CommNetParams>();
             List<ModuleDataTransmitter> MDTs = part.Modules.OfType<ModuleDataTransmitter>().ToList();
             List<ModuleDeployableAntenna> MDAs = part.Modules.OfType<ModuleDeployableAntenna>().ToList();
 
