@@ -1,5 +1,9 @@
 ## ChangeLog:
 
+
+### Version 3.1.4
+ * updated Chinese translation (github.com/zhangyuesai)
+
 ### Version 3.1.3
 * The vessel rating in the Internal Antenna PAW accounts for the antenna strength modifier in the difficulty settings
 
